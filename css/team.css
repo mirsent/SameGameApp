@@ -1,16 +1,16 @@
-.project{
+.team{
 	height: calc(100vh - 60px);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 }
-.project-label{
+.team-label{
 	margin: 30px 0;
 	font-size: 20px;
 	color: #808080;
 }
-.project-label em{
+.team-label em{
 	font-style: normal;
 	color: #E63030;
 }
@@ -19,22 +19,22 @@
 }
 
 /*项目列表*/
-.project-list{
+.team-list{
 	width: 94%;
 	min-height: 300px;
 }
-.project-list .mui-table-view-cell{
+.team-list .mui-table-view-cell{
 	margin-bottom: 20px;
 	padding: 0;
 	background: #999;
 }
-.project-list .mui-table-view-cell.on{
+.team-list .mui-table-view-cell.on{
 	background-color: #F55753;
 }
-.project-list .mui-table-view-cell>a:not(.mui-btn){
+.team-list .mui-table-view-cell>a:not(.mui-btn){
 	margin: 0;
 }
-.project-list .mui-table-view-cell>a:not(.mui-btn).mui-active{
+.team-list .mui-table-view-cell>a:not(.mui-btn).mui-active{
 	background-color: transparent;
 }
 
@@ -76,7 +76,7 @@
 }
 
 /*右侧内容部分*/
-.project-item{
+.team-item{
 	height: 90px;
 	padding: 10px;
 	padding-right: 0;
@@ -84,24 +84,24 @@
 	flex-direction: column;
 	justify-content: center;
 }
-.project-title{
+.team-title{
 	font-size: 20px;
 	font-weight: normal;
 	margin-bottom: 10px;
 	color: #FFF;
 }
-.project-status{
+.team-status{
 	color: #FFF;
 }
-.project-status em{
+.team-status em{
 	font-style: normal;
 	font-size: 24px;
 }
-.project-icon{
+.team-icon{
 	margin-top: 25px;
 	margin-right: 10px;
 }
 
-.project .mui-btn-sg{
+.team .mui-btn-sg{
 	width: 160px;
 }

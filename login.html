@@ -45,9 +45,9 @@
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
-					var projectPage = $.preload({
-						"id": 'project',
-						"url": 'project.html'
+					var teamPage = $.preload({
+						"id": 'team',
+						"url": 'team.html'
 					});
 					
 					doc.addEventListener('get_login', function(event){
@@ -76,7 +76,7 @@
 								plus.nativeUI.toast('登录成功');
 								setTimeout(function() {
 									$.openWindow({
-										id: 'project',
+										id: 'team',
 										show: {
 											aniShow: 'pop-in'
 										},

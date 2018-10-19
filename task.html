@@ -62,7 +62,7 @@
 		    </div>
 		    
 		    <div class="mui-scroll-wrapper" style="top: 266px;">
-		        <div class="mui-scroll">
+		        <div class="mui-scroll" id="tasks">
 		        	<!--任务-->
 		        	<div class="task">
 		        	
@@ -185,29 +185,70 @@
 		</div>
 		
 		<script src="js/mui.min.js"></script>
+		<script src="js/vue.min.js"></script>
+		<script src="js/vue-resource.min.js"></script>
 		<script src="js/app.js"></script>
 		<script type="text/javascript" charset="utf-8">
-	      	mui.init();
-	      	mui("#pbBlood").progressbar({progress:20}).show();
-	      	mui("#pbMagic").progressbar({progress:60}).show();
-	      	mui("#pbTask").progressbar({progress:60}).show();
-	      	
-	      	mui('.mui-scroll-wrapper').scroll({
-				deceleration: 0.0005 
-			});
-	      	
-//	      	mui('.star-item').on('click','i',function(){
-//		      	var index = parseInt(this.getAttribute("data-index")); 
-//		      	var parent = this.parentNode; 
-//		      	var children = parent.children; 
-//		      	
-//		      	for (var i = index; i < 5; i++) {
-//	      			children[i].classList.remove('mui-active')
-//	      		}
-//		      	for(var i=0;i<index;i++){ // 亮星
-//    				children[i].classList.add('mui-active');
-//	      		}
-//		    })
+	      	(function($, doc){
+				
+				$.init();
+				
+				var memberId = plus.storage.getItem('member_id');
+				var teamuuid = plus.storage.getItem('team_uuid');
+				
+				console.log('member_id', memberId)
+				console.log('teamuuid', teamuuid)
+				
+				var vue = new Vue({
+					el: '#tasks',
+					data:{
+						taskToday: [],
+						taskFuture: []
+					},
+					methods: {
+						get_today: function(){
+							this.$http.post(url+'Task/get_task_today_list',{
+								team_uuid: teamuuid,
+								task_executive_id: memberId
+							},{emulateJSON:true}).then(function(res){
+								this.taskToday = res.data.data;
+							},function(res){
+								console.log(res.status);
+							});
+						}
+					},
+					mounted: function(){
+						
+						this.get_today();
+						
+						$.plusReady(function() {
+							// 页面滚动
+							mui('.mui-scroll-wrapper').scroll({
+								deceleration: 0.0005 
+							});
+							
+							mui("#pbBlood").progressbar({progress:20}).show();
+							mui("#pbMagic").progressbar({progress:60}).show();
+							mui("#pbTask").progressbar({progress:60}).show();
+						});
+						
+					}
+				})
+				
+				// 难度星级
+		      	mui('.star-item').on('click','i',function(){
+			      	var index = parseInt(this.getAttribute("data-index")); 
+			      	var parent = this.parentNode; 
+			      	var children = parent.children; 
+			      	
+			      	for (var i = index; i < 5; i++) {
+		      			children[i].classList.remove('mui-active')
+		      		}
+			      	for(var i=0;i<index;i++){ // 亮星
+	   				children[i].classList.add('mui-active');
+		      		}
+			    })
+			}(mui, document));
 	    </script>
 	</body>
 

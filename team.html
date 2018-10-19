@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/team.css" rel="stylesheet" />
+		<style type="text/css">
+			.create-box{
+				padding: 0 20px;
+			}
+			.create-box .title{
+				font-size: 22px;
+				color: rgba(245, 87, 83, .7);
+				text-align: center;
+				margin: 20px 0;
+			}
+			.create-box .input-name{
+				background: rgba(245, 87, 83, .7);
+				border-radius: 0;
+				color: #FFF;
+			}
+			.create-box .input-name::-webkit-input-placeholder{
+				color: rgba(255, 255, 255, .8);
+			}
+			.create-box .mui-button-row{
+				text-align: left;
+				display: flex;
+				justify-content: space-between;
+			}
+			.create-box .mui-btn{
+				border: none;
+				border-radius: 0;
+				color: #FFF;
+				width: 48%;	
+			}
+			.create-box .btn-confirm{
+				background: rgba(245, 87, 83, .7);
+			}
+			.create-box .btn-cancel{
+				background: rgba(251, 172, 0, .7);
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--侧滑菜单容器-->
+		<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable mui-scalable">
+			<!--菜单部分-->
+			<aside id="offCanvasSide" class="mui-off-canvas-right">
+				<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="create-box">
+							<h2 class="title">创建城堡</h2>
+							<input type="text" class="input-name" id="teamName" placeholder="城堡名称">
+							<div class="mui-button-row">
+								<button type="button" class="mui-btn btn-confirm" id="confirm">决定</button>
+								<button type="button" class="mui-btn btn-cancel" id="cancle">取消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</aside>
+			
+			<div class="mui-inner-wrap">
+				<div class="mui-content mui-scroll-wrapper"  id="offCanvasContentScroll" style="background: #FFF;">
+					<div class="brand"></div>
+					
+					<div class="team">
+						<span class="team-label">请选择您要继续游戏的<em>城堡</em></span>
+						<div class="team-list" id="teams">
+							
+						</div>
+						<button type="button" class="mui-btn mui-btn-sg" id="next">继续游戏</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>		
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			(function($, doc) {
+				
+				$.init();
+				
+				$.plusReady(function() {
+					var taskPage = $.preload({
+						"id": 'task',
+						"url": 'task.html'
+					});
+					
+					var memberId = plus.storage.getItem('member_id');
+					
+					var offCanvasWrapper = mui('#offCanvasWrapper'); // 侧滑菜单容器
+					var offCanvasSide = offCanvasWrapper[0].querySelector('#offCanvasSide');
+					var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap'); // 主界面容器
+					offCanvasSide.addEventListener('drag', function(event) {
+						event.stopPropagation();
+					});
+					offCanvasInner.addEventListener('drag', function(event) {
+						event.stopPropagation();
+					});
+					
+					get_teams();
+					
+					// 获取数据并展示
+					function get_teams(){
+						mui.post(url+'Team/get_team_join_list',{
+								member_id: memberId
+							},function(data){
+								var sOut = '',
+									teams = data.data;
+								// 判断是否显示新建
+								var showCreate = false,
+									teamCount = teams.length;
+								if (teamCount < 3) {
+									teamCount++;
+									showCreate = true;
+								}
+								
+								for (var i = 0; i < teamCount; i++) {
+									
+									if(teamCount == 1){
+										var status = '';
+									} else {
+										var status = i == 0 ? 'on' : '';
+									}
+									
+									if (showCreate && i == teamCount-1) {
+										var content = '<h2 class="mui-ellipsis team-title">创建新城堡</h2>';
+										status += 'btn-add';
+									} else {
+										var content = '<h2 class="mui-ellipsis team-title">'+teams[i]['team_name']+'</h2>'
+											+ '<p class="team-status">城堡运行了<em>'+(parseInt(teams[i]['days'])+1)+'</em>天</p>';
+									}
+									
+									sOut += '<ul class="mui-table-view">';
+									sOut += '<li class="mui-table-view-cell mui-media '+status+'" data-uuid='+teams[i]['team_uuid']+'>';
+									sOut += '<a href="javascript:;">';
+									sOut += '<img class="mui-media-object mui-pull-right team-icon" src="images/logo_bg.png">';
+									sOut += '<div class="mui-media-body">';
+									sOut += '<div class="icon-item mui-pull-left"><div class="icon-t"></div><div class="icon-b"></div></div>';
+									sOut += '<div class="team-item">';
+									sOut += content;
+									
+									sOut += '</div></div></a></li></ul>';
+								}
+								document.getElementById("teams").innerHTML = sOut;
+								
+								// 点击
+								mui(".mui-table-view").on('tap','.mui-table-view-cell',function(){
+									if( this.classList.contains('btn-add') ){
+										offCanvasWrapper.offCanvas().show();
+									} else {
+										mui('.mui-table-view-cell').each(function(){
+											this.classList.remove('on')
+										})
+										this.classList.add('on');
+									}
+								})
+							},'json'
+						);
+					}
+					
+					// 点击继续游戏
+					var nextBtn = doc.getElementById('next');
+					nextBtn.addEventListener('tap', function(){
+						var teamuuid = document.getElementsByClassName('mui-media on')[0].getAttribute('data-uuid');
+						plus.storage.setItem('team_uuid', teamuuid);
+						
+						$.fire(taskPage, 'show', null);
+						$.openWindow({
+							id: 'task',
+							show: {
+								aniShow: 'pop-in'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					})
+					
+					// 确定
+					document.getElementById("confirm").addEventListener('tap',function(){
+						var teamNameBox = document.getElementById("teamName");
+						if (teamNameBox.value == '') {
+							plus.nativeUI.toast('还没有给城堡起名字');
+							return;
+						}
+						mui.post(url+'Team/add_team',{
+								founder_id: memberId,
+								team_name: teamNameBox.value
+							},function(data){
+								offCanvasWrapper.offCanvas().close();
+								if (data.status == 1) {
+									plus.nativeUI.toast('新建城堡成功');
+									get_teams();
+								} else {
+									plus.nativeUI.toast('新建城堡失败，请稍后重试');
+								}
+							},'json'
+						);
+					})
+					// 取消
+					document.getElementById("cancle").addEventListener('tap',function(){
+						offCanvasWrapper.offCanvas().close();
+					})
+				});
+				
+			}(mui, document));
+		</script>
+	</body>
+
+</html>
