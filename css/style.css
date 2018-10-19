@@ -1,0 +1,103 @@
+/*字体图标*/
+@font-face {
+    font-family: Micons;
+    font-weight: normal;
+    font-style: normal;
+
+    src: url('../fonts/iconfont.ttf') format('truetype');
+}
+
+.iconfont {
+  font-family: Micons !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-add:before { content: "\e6a3"; }
+
+.icon-star:before { content: "\e60b"; }
+
+.icon-reduce:before { content: "\e627"; }
+
+.icon-star{
+	color: #E6E6E6;
+}
+.icon-star.mui-active{
+	color: #F8D053;
+}
+
+
+.ui-page-login,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+p,h1{
+	margin: 0;
+	padding: 0;
+}
+.mui-content{height: 100%;}
+
+/*品牌*/
+.brand{
+	height: 60px;
+	background: url(../images/brand.png) no-repeat 20px center;
+	background-color: #FFF;
+	background-size: 70%;
+}
+
+/*按钮*/
+.mui-btn-sg{
+	font-size: 18px;
+	color: #FFF;
+	background-color: #E73130;
+	padding: 6px 0;
+	border-radius: 0;
+}
+
+/*badge*/
+.m-badge-square{
+	color: #FFF;
+	border-radius: 0;
+}
+.m-badge-info{
+	background-color: #10CFBD;
+}
+.m-badge-danger{
+	color: #FFF;
+	background-color: #F55753;
+}
+.m-badge-warning{
+	color: #FFF;
+	background-color: #F8D053;
+}
+.m-badge-primary{
+	color: #FFF;
+	background-color: #3B4752;
+}
+.m-badge-default{
+	color: #3B4752;
+	background-color: #E6E6E6;
+}
+
+
+/*button*/
+.m-btn-warning{
+	color: #FFF;
+	background-color: #FACD00;
+	border-color: #FACD00;
+}
+.m-btn-danger{
+	color: #FFF;
+	background-color: #F55753;
+	border-color: #F55753;
+}
+.m-btn-info{
+	color: #FFF;
+	background-color: #06B4C7;
+	border-color: #06B4C7;
+}

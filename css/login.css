@@ -1,0 +1,44 @@
+.mui-content-login{
+	background-color: #FFF;
+	display: flex;
+	flex-direction: column;
+}
+
+.login-brand{
+	height: 60%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.login-brand .brand-logo{
+	width: 120px;
+}
+.login-brand .brand-name{
+	font-size: 26px;
+	color: #4E4E4E;
+	margin: 15px 0;
+}
+.login-brand .brand-label{
+	font-size: 14px;
+	color: #8B8B8B;
+}
+
+.login-form{
+	flex: 1;
+	padding: 40px;
+}
+.login-form .login-label{
+	font-size: 14px;
+	color: #818181;
+	text-align: center;
+}
+.login-form .mui-input{
+	border: none;
+	border-bottom: 1px solid #E73130;
+	border-radius: 0;
+	padding: 10px 0;
+}
+.login-form .mui-btn{
+	margin-top: 10px;
+}

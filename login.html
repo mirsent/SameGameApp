@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/login.css" rel="stylesheet" />
+		<style type="text/css">
+			.login-form{
+				padding: 10px 40px;
+			}
+			.login-label{
+				margin-top: 12px;
+			}
+			.link-serve{
+				color: #E73130;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content mui-content-login">
+			<div class="login-brand">
+				<img src="images/logo.png" class="brand-logo" />
+				<h1 class="brand-name">SameGame</h1>
+				<span class="brand-label">像游戏一样工作</span>
+			</div>
+			<div class="login-form">
+				<div class="mui-input-row">
+					<input id='mail' type="email" class="mui-input-clear mui-input" placeholder="电子邮箱" disabled>
+				</div>
+				<div class="mui-input-row">
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="密码">
+				</div>
+				<button id='login' class="mui-btn mui-btn-block mui-btn-sg">开始使用像游</button>
+				<p class="login-label">用户正在登录“像游”账户</p>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					var projectPage = $.preload({
+						"id": 'project',
+						"url": 'project.html'
+					});
+					
+					doc.addEventListener('get_login', function(event){
+						var mail = event.detail.mail;
+						document.getElementById("mail").value = mail;
+					})
+					
+					var loginButton = doc.getElementById('login');
+					var mailBox = doc.getElementById('mail'),
+						passwordBox = doc.getElementById('password');
+					
+					loginButton.addEventListener('tap', function(event) {
+						
+						var loginInfo = {
+							mail: mailBox.value,
+							password: passwordBox.value,
+						};
+						
+						if (passwordBox.value.length == 0) {
+							plus.nativeUI.toast('密码不能为空');
+							return;
+						}
+						
+						app.login(loginInfo, function(res) {
+							if (res == 1) {
+								plus.nativeUI.toast('登录成功');
+								setTimeout(function() {
+									$.openWindow({
+										id: 'project',
+										show: {
+											aniShow: 'pop-in'
+										},
+										waiting: {
+											autoShow: false
+										}
+									});
+								}, 1000);
+							} else {
+								plus.nativeUI.toast(res);
+							}
+						});
+					});
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

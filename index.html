@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/login.css" rel="stylesheet" />
+		<style type="text/css">
+			.login-label{
+				margin-bottom: 30px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content mui-content-login">
+			<div class="login-brand">
+				<img src="images/logo.png" class="brand-logo" />
+				<h1 class="brand-name">SameGame</h1>
+				<span class="brand-label">像游戏一样工作</span>
+			</div>
+			<div class="login-form">
+				<p class="login-label">免费注册或登录</p>
+				<div class="mui-input-row">
+					<input id='mail' type="email" class="mui-input-clear mui-input" placeholder="电子邮箱">
+				</div>
+				<button type="button" id='login' class="mui-btn mui-btn-block mui-btn-sg">继续</button>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					// 预加载页面
+					var loginPage = $.preload({
+						"id": 'login',
+						"url": 'login.html'
+					});
+					var regPage = $.preload({
+						"id": 'reg',
+						"url": 'reg.html'
+					});
+					
+					// 跳转登录页面
+					var toLogin = function() {
+						$.fire(loginPage, 'get_login', {
+							mail: mailBox.value
+						});
+						$.openWindow({
+							id: 'login',
+							show: {
+								aniShow: 'pop-in'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					};
+					
+					// 跳转注册页面
+					var toReg = function() {
+						$.fire(regPage, 'get_reg', {
+							mail: mailBox.value
+						});
+						$.openWindow({
+							id: 'reg',
+							show: {
+								aniShow: 'pop-in'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					};
+					
+					var loginBtn = doc.getElementById('login');
+					var mailBox = doc.getElementById('mail');
+					loginBtn.addEventListener('tap', function(event) {
+						var memberInfo = {
+							mail: mailBox.value,
+						};
+						app.check(memberInfo, function(res) {
+							if (res == 1) {
+								plus.nativeUI.toast('请登录', {
+									verticalAlign: "center"
+								});
+								toLogin();
+							} else if (res == 2) {
+								plus.nativeUI.toast('请注册', {
+									verticalAlign: "center"
+								});
+								toReg();
+							} else {
+								plus.nativeUI.toast(res, {
+									verticalAlign: "center"
+								});
+							}
+						});
+					});
+				});
+				
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

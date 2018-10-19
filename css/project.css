@@ -1,0 +1,107 @@
+.project{
+	height: calc(100vh - 60px);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+.project-label{
+	margin: 30px 0;
+	font-size: 20px;
+	color: #808080;
+}
+.project-label em{
+	font-style: normal;
+	color: #E63030;
+}
+#next{
+	margin: 30px 0;
+}
+
+/*项目列表*/
+.project-list{
+	width: 94%;
+	min-height: 300px;
+}
+.project-list .mui-table-view-cell{
+	margin-bottom: 20px;
+	padding: 0;
+	background: #999;
+}
+.project-list .mui-table-view-cell.on{
+	background-color: #F55753;
+}
+.project-list .mui-table-view-cell>a:not(.mui-btn){
+	margin: 0;
+}
+.project-list .mui-table-view-cell>a:not(.mui-btn).mui-active{
+	background-color: transparent;
+}
+
+/*左侧图标部分*/
+.icon-item{
+	width: 100px;
+}
+.icon-t{
+	height: 60px;
+	background: #666;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.mui-table-view-cell.on .icon-t{
+	background: #FBF357;
+}
+.icon-t:after{
+	content: '';
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	background: #E6E6E6;
+	transform:rotate(45deg);
+	-ms-transform:rotate(45deg); 	
+	-moz-transform:rotate(45deg); 	
+	-webkit-transform:rotate(45deg); 
+	-o-transform:rotate(45deg);
+}
+.mui-table-view-cell.on .icon-t:after{
+	background: #06B4C7;
+}
+.icon-b{
+	height: 30px;
+	background: #CCC;
+}
+.mui-table-view-cell.on .icon-b{
+	background: #FBAC00;
+}
+
+/*右侧内容部分*/
+.project-item{
+	height: 90px;
+	padding: 10px;
+	padding-right: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.project-title{
+	font-size: 20px;
+	font-weight: normal;
+	margin-bottom: 10px;
+	color: #FFF;
+}
+.project-status{
+	color: #FFF;
+}
+.project-status em{
+	font-style: normal;
+	font-size: 24px;
+}
+.project-icon{
+	margin-top: 25px;
+	margin-right: 10px;
+}
+
+.project .mui-btn-sg{
+	width: 160px;
+}

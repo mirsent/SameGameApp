@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/task.css" rel="stylesheet" />
+		<style type="text/css">
+			
+		</style>
+	</head>
+
+	<body>
+		
+		<div class="mui-content">
+		    <div class="brand"></div>
+		    
+		    <div class="role">
+		    	<!--角色上部分-->
+		    	<div class="role-t">
+		    		<img src="images/role.png" class="head"/>
+		    		<div class="info">
+		    			<div class="info-item">
+		    				<img src="images/job.png" class="info-head"/>
+		    				<div>
+		    					<h2 class="info-name">豪有根</h2>
+		    					<span class="info-job">12级 战士</span>
+		    				</div>
+		    			</div>
+		    			<div class="info-item info-progressbar info-blood">
+		    				<img src="images/blood.png" class="icon-blood"/>
+		    				<div class="mui-progressbar" id="pbBlood">
+								<span></span>
+							</div>
+							<span class="info-rate">35/50</span>
+		    			</div>
+		    			<div class="info-item info-progressbar info-magic">
+		    				<img src="images/magic.png" class="icon-magic"/>
+		    				<div class="mui-progressbar"  id="pbMagic">
+		    					<span></span>
+		    				</div>
+		    				<span class="info-rate">200/500</span>
+		    			</div>
+		    		</div>
+		    	</div>
+		    	<!--角色下部分-->
+		    	<div class="role-b">
+		    		<ul class="reward">
+		    			<li class="reward-exp"><img src="images/exp.png" class="reward-icon" />1024</li>
+		    			<li class="reward-trophy"><img src="images/trophy.png" class="reward-icon" />9999</li>
+		    			<li class="reward-star"><img src="images/star.png" class="reward-icon" />9999</li>
+		    			<li class="reward-money"><img src="images/money.png" class="reward-icon" />9999</li>
+		    		</ul>
+		    		<div class="notice">
+		    			<p class="notice-c">公告内容:这是公告~!</p>
+		    			<a href="javascript:;" class="notice-btn"></a>
+		    		</div>
+		    	</div>
+		    </div>
+		    
+		    <div class="mui-scroll-wrapper" style="top: 266px;">
+		        <div class="mui-scroll">
+		        	<!--任务-->
+		        	<div class="task">
+		        	
+		        		<!--任务标题-->
+		        		<div class="task-title">
+		        			<h1>今日任务</h1>
+		        			<span class="mui-badge mui-badge-blue">1</span>
+		        			<div class="mui-progressbar" id="pbTask">
+		        				<span></span>
+		        			</div>
+		        		</div>
+		        	
+		        		<!--任务列表-->
+		        		<div class="task-list">
+		        			<ul class="mui-table-view">
+		        				<li class="mui-table-view-cell mui-collapse mui-active">
+		        	
+		        					<a class="mui-navigate-right" href="#">
+		        						今日任务说明
+		        						<span class="task-expire">10/11</span>
+		        						<div class="mui-switch mui-switch-mini mui-active">
+		        							<div class="mui-switch-handle"></div>
+		        						</div>
+		        						<span class="mui-badge m-badge-square m-badge-info">进行</span>
+		        					</a>
+		        	
+		        					<div class="mui-collapse-content">
+		        						<p>今日任务内容</p>
+		        						<div class="task-tag">
+		        							<div class="badge-item">
+		        								<span class="mui-badge m-badge-danger">tag</span>
+		        								<span class="mui-badge m-badge-warning">tag</span>
+		        							</div>
+		        							<div class="star-item">
+		        								<i data-index="1" class="mui-icon iconfont icon-star mui-active"></i>
+		        								<i data-index="2" class="mui-icon iconfont icon-star mui-active"></i>
+		        								<i data-index="3" class="mui-icon iconfont icon-star mui-active"></i>
+		        								<i data-index="4" class="mui-icon iconfont icon-star"></i>
+		        								<i data-index="5" class="mui-icon iconfont icon-star"></i>
+		        							</div>
+		        						</div>
+		        						<div class="finish-item">
+		        							<div class="mui-switch mui-switch-mini mui-active">
+		        								<div class="mui-switch-handle"></div>
+		        							</div>
+		        						</div>
+		        					</div>
+		        	
+		        				</li>
+		        				<li class="mui-table-view-cell mui-collapse">
+		        					<a class="mui-navigate-right" href="#">
+		        						今日任务说明
+		        						<span class="task-expire">10/11</span>
+		        						<div class="mui-switch mui-switch-mini">
+		        							<div class="mui-switch-handle"></div>
+		        						</div>
+		        					</a>
+		        					<div class="mui-collapse-content">
+		        						<p>今日任务内容</p>
+		        						<div class="task-tag">
+		        							<div class="badge-item">
+		        								<span class="mui-badge m-badge-danger">tag</span>
+		        								<span class="mui-badge m-badge-warning">tag</span>
+		        							</div>
+		        							<div class="star-item">
+		        								<i data-index="1" class="mui-icon iconfont icon-star mui-active"></i>
+		        								<i data-index="2" class="mui-icon iconfont icon-star mui-active"></i>
+		        								<i data-index="3" class="mui-icon iconfont icon-star"></i>
+		        								<i data-index="4" class="mui-icon iconfont icon-star"></i>
+		        								<i data-index="5" class="mui-icon iconfont icon-star"></i>
+		        							</div>
+		        						</div>
+		        						<div class="finish-item">
+		        							<div class="mui-switch mui-switch-mini">
+		        								<div class="mui-switch-handle"></div>
+		        							</div>
+		        						</div>
+		        					</div>
+		        				</li>
+		        				<li class="mui-table-view-cell mui-collapse">
+		        					<a class="mui-navigate-right" href="#">
+		        						今日任务说明
+		        						<span class="task-expire">10/11</span>
+		        						<div class="mui-switch mui-switch-mini mui-active">
+		        							<div class="mui-switch-handle"></div>
+		        						</div>
+		        					</a>
+		        					<div class="mui-collapse-content">
+		        						<p class="task-desc">今日任务内容</p>
+		        						<div class="task-tag">
+		        							<div class="badge-item">
+		        								<span class="mui-badge m-badge-danger">tag</span>
+		        								<span class="mui-badge m-badge-warning">tag</span>
+		        							</div>
+		        							<div class="star-item">
+		        								<i data-index="1" class="mui-icon iconfont icon-star mui-active"></i>
+		        								<i data-index="2" class="mui-icon iconfont icon-star mui-active"></i>
+		        								<i data-index="3" class="mui-icon iconfont icon-star mui-active"></i>
+		        								<i data-index="4" class="mui-icon iconfont icon-star mui-active"></i>
+		        								<i data-index="5" class="mui-icon iconfont icon-star"></i>
+		        							</div>
+		        						</div>
+		        						<div class="finish-item">
+		        							<div class="mui-switch mui-switch-mini mui-active">
+		        								<div class="mui-switch-handle"></div>
+		        							</div>
+		        						</div>
+		        					</div>
+		        				</li>
+		        			</ul>
+		        		</div>
+		        	</div>
+		        	
+		        	<button type="button" class="mui-btn mui-btn-sg mui-btn-block">
+    		    		<i class="mui-icon iconfont icon-add" style="font-size: 45px;"></i>
+    		    	</button>
+		        </div>
+		    </div>
+		    
+		</div>
+		
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script type="text/javascript" charset="utf-8">
+	      	mui.init();
+	      	mui("#pbBlood").progressbar({progress:20}).show();
+	      	mui("#pbMagic").progressbar({progress:60}).show();
+	      	mui("#pbTask").progressbar({progress:60}).show();
+	      	
+	      	mui('.mui-scroll-wrapper').scroll({
+				deceleration: 0.0005 
+			});
+	      	
+//	      	mui('.star-item').on('click','i',function(){
+//		      	var index = parseInt(this.getAttribute("data-index")); 
+//		      	var parent = this.parentNode; 
+//		      	var children = parent.children; 
+//		      	
+//		      	for (var i = index; i < 5; i++) {
+//	      			children[i].classList.remove('mui-active')
+//	      		}
+//		      	for(var i=0;i<index;i++){ // 亮星
+//    				children[i].classList.add('mui-active');
+//	      		}
+//		    })
+	    </script>
+	</body>
+
+</html>
