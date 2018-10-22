@@ -101,3 +101,46 @@ p,h1{
 	background-color: #06B4C7;
 	border-color: #06B4C7;
 }
+
+
+/*滑动菜单*/
+.create-box{
+	padding: 0 20px;
+}
+.create-box .input-group{
+	margin-bottom: 10px;
+}
+.create-box .title{
+	font-size: 22px;
+	color: rgba(245, 87, 83, .7);
+	text-align: center;
+	margin: 20px 0;
+}
+.create-box .input-name{
+	background: rgba(245, 87, 83, .7);
+	border-radius: 0;
+	color: #FFF;
+}
+.create-box .label{
+	color: rgba(255, 255, 255, .8);
+}
+.create-box .input-name::-webkit-input-placeholder{
+	color: rgba(255, 255, 255, .8);
+}
+.create-box .mui-button-row{
+	text-align: left;
+	display: flex;
+	justify-content: space-between;
+}
+.create-box .mui-btn{
+	border: none;
+	border-radius: 0;
+	color: #FFF;
+	width: 48%;	
+}
+.create-box .btn-confirm{
+	background: rgba(245, 87, 83, .7);
+}
+.create-box .btn-cancel{
+	background: rgba(251, 172, 0, .7);
+}

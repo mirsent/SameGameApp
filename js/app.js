@@ -94,7 +94,10 @@ var url = 'http://samegame.ineinv.com/index.php/Home/';
 				password: loginInfo.password
 			},function(data){
 				if (data.status == 1) {
+					// 会员信息存入缓存
 					plus.storage.setItem('member_id', data.data.id);
+					plus.storage.setItem('member_name', data.data.member_name);
+					console.log('会员信息', JSON.stringify(data.data))
 					return callback(1); // 登录成功
 				} else {
 					return callback('密码错误');

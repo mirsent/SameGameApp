@@ -9,40 +9,7 @@
 		<link href="css/style.css" rel="stylesheet" />
 		<link href="css/team.css" rel="stylesheet" />
 		<style type="text/css">
-			.create-box{
-				padding: 0 20px;
-			}
-			.create-box .title{
-				font-size: 22px;
-				color: rgba(245, 87, 83, .7);
-				text-align: center;
-				margin: 20px 0;
-			}
-			.create-box .input-name{
-				background: rgba(245, 87, 83, .7);
-				border-radius: 0;
-				color: #FFF;
-			}
-			.create-box .input-name::-webkit-input-placeholder{
-				color: rgba(255, 255, 255, .8);
-			}
-			.create-box .mui-button-row{
-				text-align: left;
-				display: flex;
-				justify-content: space-between;
-			}
-			.create-box .mui-btn{
-				border: none;
-				border-radius: 0;
-				color: #FFF;
-				width: 48%;	
-			}
-			.create-box .btn-confirm{
-				background: rgba(245, 87, 83, .7);
-			}
-			.create-box .btn-cancel{
-				background: rgba(251, 172, 0, .7);
-			}
+			
 		</style>
 	</head>
 
@@ -66,7 +33,7 @@
 			</aside>
 			
 			<div class="mui-inner-wrap">
-				<div class="mui-content mui-scroll-wrapper"  id="offCanvasContentScroll" style="background: #FFF;">
+				<div class="mui-content mui-scroll-wrapper" id="offCanvasContentScroll" style="background: #FFF;">
 					<div class="brand"></div>
 					
 					<div class="team">
@@ -79,7 +46,7 @@
 					
 				</div>
 			</div>
-		</div>		
+		</div>	
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
 		<script>
@@ -170,7 +137,7 @@
 					var nextBtn = doc.getElementById('next');
 					nextBtn.addEventListener('tap', function(){
 						var teamuuid = document.getElementsByClassName('mui-media on')[0].getAttribute('data-uuid');
-						plus.storage.setItem('team_uuid', teamuuid);
+						plus.storage.setItem('team_uuid', teamuuid); // team_uuid存入缓存
 						
 						$.fire(taskPage, 'show', null);
 						$.openWindow({
