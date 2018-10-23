@@ -55,10 +55,10 @@
 				$.init();
 				
 				$.plusReady(function() {
-					var taskPage = $.preload({
-						"id": 'task',
-						"url": 'task.html'
-					});
+//					var taskPage = $.preload({
+//						"id": 'task',
+//						"url": 'task.html'
+//					});
 					
 					var memberId = plus.storage.getItem('member_id');
 					
@@ -139,8 +139,9 @@
 						var teamuuid = document.getElementsByClassName('mui-media on')[0].getAttribute('data-uuid');
 						plus.storage.setItem('team_uuid', teamuuid); // team_uuid存入缓存
 						
-						$.fire(taskPage, 'show', null);
+//						$.fire(taskPage, 'show', null);
 						$.openWindow({
+							url: 'task.html',
 							id: 'task',
 							show: {
 								aniShow: 'pop-in'
@@ -151,7 +152,7 @@
 						});
 					})
 					
-					// 确定
+					// 添加团队
 					document.getElementById("confirm").addEventListener('tap',function(){
 						var teamNameBox = document.getElementById("teamName");
 						if (teamNameBox.value == '') {
@@ -172,7 +173,7 @@
 							},'json'
 						);
 					})
-					// 取消
+					// 取消添加团队
 					document.getElementById("cancle").addEventListener('tap',function(){
 						offCanvasWrapper.offCanvas().close();
 					})
