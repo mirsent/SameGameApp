@@ -18,6 +18,30 @@
 				font-size: 24px;
 				margin-right: 4px;
 			}
+			
+			#menuPopover{
+				width:140px;
+				color: #FFF;
+				top: 60px !important;
+				background-color: transparent;
+				-webkit-box-shadow: none;
+						box-shadow: none;
+			}
+			#menuPopover .mui-table-view,
+			#menuPopover .mui-popover-arrow:after{
+				background: #F55753;
+			}
+			#menuPopover .mui-table-view-cell:after{
+				right: 15px;
+				-webkit-box-shadow: 0 -1px 0 rgba(255, 255, 255, .2),
+            						0 -2px 0 rgba(0, 0, 0, .2);
+            			box-shadow: 0 -1px 0 rgba(255, 255, 255, .2),
+            						0 -2px 0 rgba(0, 0, 0, .2);
+				background-color: transparent;
+			}
+			#menuPopover .mui-table-view-cell>a:not(.mui-btn).mui-active{
+				background-color: #f3423e;
+			}
 		</style>
 	</head>
 
@@ -60,11 +84,12 @@
 			</aside>
 			
 			<div class="mui-inner-wrap">
+				
 				<div class="mui-content mui-scroll-wrapper" id="tasks">
 					<div class="brand">
-						<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+						<a href="#menuPopover" class="mui-icon mui-icon-plusempty mui-pull-right" id="menuBtn" ></a>
 					</div>
-		    
+					
 				    <div class="role">
 				    	<!--角色上部分-->
 				    	<div class="role-t">
@@ -122,7 +147,7 @@
 				        		<!--任务标题-->
 				        		<div class="task-title">
 				        			<h1>今日任务</h1>
-				        			<span class="mui-badge mui-badge-blue">1</span>
+				        			<span class="mui-badge mui-badge-blue">{{taskToday.number_complete}}</span>
 				        			<div class="mui-progressbar" id="pbTask">
 				        				<span></span>
 				        			</div>
@@ -133,7 +158,69 @@
 				        			<ul class="mui-table-view">
 				        				<li class="mui-table-view-cell mui-collapse"
 				        					v-bind:class="{ 'mui-active': index == 0 }"
-				        					v-for="(task, index) in taskToday">
+				        					v-for="(task, index) in taskToday.list">
+				        	
+				        					<a class="mui-navigate-right" href="#">
+				        						{{task.task_name}}
+				        						<span class="task-expire">{{task.deadline_date}}</span>
+				        						
+				        						<div class="mui-switch mui-switch-mini" :data-id="task.id" 
+				        							v-bind:class="{ 'mui-active': task.status == 2 }" v-mui="'switch'">
+				        							<div class="mui-switch-handle"></div>
+				        						</div>
+				        						
+				        						<span class="mui-badge m-badge-square m-badge-info"
+				        							v-if="task.status == 1">进行</span>
+				        						<span class="mui-badge m-badge-square m-badge-warning"
+				        							v-if="task.status == 2">完成</span>
+				        					</a>
+				        	
+				        					<div class="mui-collapse-content">
+				        						<p>{{task.task_desc}}</p>
+				        						<div class="task-tag">
+				        							<div class="badge-item">
+				        								<span class="mui-badge m-badge-danger">tag</span>
+				        								<span class="mui-badge m-badge-warning">tag</span>
+				        							</div>
+				        							<div class="star-item">
+				        								<i data-index="1" class="mui-icon iconfont icon-star" 
+				        									v-bind:class="{ 'mui-active': task.difficult >= 1 }"></i>
+				        								<i data-index="2" class="mui-icon iconfont icon-star"
+				        									v-bind:class="{ 'mui-active': task.difficult >= 2 }"></i>
+				        								<i data-index="3" class="mui-icon iconfont icon-star"
+				        									v-bind:class="{ 'mui-active': task.difficult >= 3 }"></i>
+				        								<i data-index="4" class="mui-icon iconfont icon-star"
+				        									v-bind:class="{ 'mui-active': task.difficult >= 4 }"></i>
+				        								<i data-index="5" class="mui-icon iconfont icon-star"
+				        									v-bind:class="{ 'mui-active': task.difficult >= 5 }"></i>
+				        							</div>
+				        						</div>
+				        						<div class="finish-item">
+				        							<div class="mui-switch mui-switch-mini" :data-id="task.id"
+				        								v-bind:class="{ 'mui-active': task.status == 2 }" v-mui="'switch'">
+				        								<div class="mui-switch-handle"></div>
+				        							</div>
+				        						</div>
+				        					</div>
+				        	
+				        				</li>
+				        			</ul>
+				        		</div>
+				        		
+				        		<div class="task-title">
+				        			<h1>其他任务</h1>
+				        			<span class="mui-badge mui-badge-blue">{{taskOther.number_complete}}</span>
+				        			<div class="mui-progressbar" id="pbTaskOther">
+				        				<span></span>
+				        			</div>
+				        		</div>
+				        		
+				        		<!--任务列表-->
+				        		<div class="task-list">
+				        			<ul class="mui-table-view">
+				        				<li class="mui-table-view-cell mui-collapse"
+				        					v-bind:class="{ 'mui-active': index == 0 }"
+				        					v-for="(task, index) in taskOther.list">
 				        	
 				        					<a class="mui-navigate-right" href="#">
 				        						{{task.task_name}}
@@ -182,7 +269,7 @@
 				        			</ul>
 				        		</div>
 				        	</div>
-				        	
+				        	<!--添加任务按钮-->
 				        	<button type="button" class="mui-btn mui-btn-sg mui-btn-block" id="addTask">
 		    		    		<i class="mui-icon iconfont icon-add" style="font-size: 45px;"></i>
 		    		    	</button>
@@ -191,6 +278,13 @@
 					
 				</div>
 			</div>
+		</div>
+		
+		<div id="menuPopover" class="mui-popover">
+			<ul class="mui-table-view">
+		    	<li class="mui-table-view-cell"><a href="#">任务大厅</a></li>
+		    	<li class="mui-table-view-cell"><a href="#" id="changeTeamBtn">切换城堡</a></li>
+		    </ul>
 		</div>
 		
 		<script src="js/mui.min.js"></script>
@@ -204,10 +298,6 @@
 				var memberName = plus.storage.getItem('member_name');
 				var teamuuid = plus.storage.getItem('team_uuid');
 				
-				console.log('member_id', memberId)
-				console.log('teamuuid', teamuuid)
-				console.log('member_name', memberName);
-				
 				var vue = new Vue({
 					el: '#tasks',
 					data:{
@@ -215,28 +305,32 @@
 							member_name: plus.storage.getItem('member_name') 
 						},
 						taskToday: [],
-						taskFuture: []
+						taskOther: []
 					},
 					methods: {
 						// 今日任务
-						get_today: function(){
+						get_today: function(teamuuid){
 							this.$http.post(url+'Task/get_task_today_list',{
 								team_uuid: teamuuid,
 								task_executive_id: memberId
 							},{emulateJSON:true}).then(function(res){
+								console.log('今日任务', JSON.stringify(res.data.data))
 								this.taskToday = res.data.data;
-								console.log(JSON.stringify(res.data.data))
+								
+								mui("#pbTask").progressbar({progress: res.data.data.rate}).show();
 							},function(res){
 								console.log(res.status);
 							});
 						},
-						get_other: function(){
+						get_other: function(teamuuid){
 							this.$http.post(url+'Task/get_task_other_list',{
 								team_uuid: teamuuid,
 								task_executive_id: memberId
 							},{emulateJSON:true}).then(function(res){
-								this.taskFuture = res.data.data;
-								console.log(JSON.stringify(res.data.data))
+								console.log('其他任务', JSON.stringify(res.data.data))
+								this.taskOther = res.data.data;
+								
+								mui("#pbTaskOther").progressbar({progress: res.data.data.rate}).show();
 							},function(res){
 								console.log(res.status);
 							});
@@ -252,12 +346,22 @@
 					        }
 					    });
 						
-						// 获取今日任务
-						vm.get_today();
-						vm.get_other();
-						
 						$.plusReady(function() {
 							$.init();
+							
+							// 预加载团队页面
+							var teamPage = mui.preload({
+								url:'team.html',
+								id:'team.html'
+							})
+							
+							// 接收团队页传递参数
+							window.addEventListener("getTaskByTeam",function(e){
+								var tranTeamuuid = e.detail.team_uuid;
+								console.log('传递的teamuuid', tranTeamuuid);
+								vm.get_today(tranTeamuuid);
+								vm.get_other(tranTeamuuid);
+							})
 							
 							// 页面滚动
 							mui('.mui-scroll-wrapper').scroll({
@@ -276,7 +380,6 @@
 							
 							mui("#pbBlood").progressbar({progress:20}).show();
 							mui("#pbMagic").progressbar({progress:60}).show();
-							mui("#pbTask").progressbar({progress:60}).show();
 							
 							// 切换完成
 							mui(".mui-table-view").on("tap", ".mui-switch", function(event){
@@ -420,6 +523,20 @@
 							// 取消发布任务
 							document.getElementById("cancleBtn").addEventListener('tap',function(){
 								offCanvasWrapper.offCanvas().close();
+							})
+							
+							// 切换团队
+							document.getElementById("changeTeamBtn").addEventListener("tap", function(){
+								mui("#menuPopover").popover('toggle');
+								mui.fire(teamPage,'activeTeam',{
+									team_uuid: teamuuid
+								})
+								mui.openWindow({
+							    	id:'team.html',
+							    	show:{
+							    		aniShow: "slide-in-bottom"
+							    	}
+							  	});
 							})
 						});
 					}

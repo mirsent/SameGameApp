@@ -55,12 +55,20 @@
 				$.init();
 				
 				$.plusReady(function() {
-//					var taskPage = $.preload({
-//						"id": 'task',
-//						"url": 'task.html'
-//					});
 					
 					var memberId = plus.storage.getItem('member_id');
+					
+					// 预加载任务页面
+					var taskPage = mui.preload({
+						url:'task.html',
+						id:'task.html'
+					})
+					
+					// 接收任务页传递参数
+					window.addEventListener("activeTeam",function(e){
+						var activeTeamuuid = e.detail.team_uuid;
+						
+					})
 					
 					var offCanvasWrapper = mui('#offCanvasWrapper'); // 侧滑菜单容器
 					var offCanvasSide = offCanvasWrapper[0].querySelector('#offCanvasSide');
@@ -139,15 +147,13 @@
 						var teamuuid = document.getElementsByClassName('mui-media on')[0].getAttribute('data-uuid');
 						plus.storage.setItem('team_uuid', teamuuid); // team_uuid存入缓存
 						
-//						$.fire(taskPage, 'show', null);
+						mui.fire(taskPage,'getTaskByTeam',{
+							team_uuid: teamuuid
+						})
 						$.openWindow({
-							url: 'task.html',
-							id: 'task',
+							id: 'task.html',
 							show: {
 								aniShow: 'pop-in'
-							},
-							waiting: {
-								autoShow: false
 							}
 						});
 					})

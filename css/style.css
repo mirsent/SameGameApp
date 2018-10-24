@@ -49,6 +49,17 @@ p,h1{
 	background-color: #FFF;
 	background-size: 70%;
 }
+.brand .mui-icon{
+	line-height: 60px;
+	margin-right: 10px;
+}
+.brand #menuBtn{
+	width: 50px;
+	font-size: 30px;
+	font-weight: bold;
+	color: #E73130;
+	text-align: right;
+}
 
 /*按钮*/
 .mui-btn-sg{
