@@ -49,17 +49,24 @@
 				border-radius: 0;
 			}
 			.status-item .status-show{
+				display: inline-block;
+				width: 120px;
 				color: #CCC;
 				font-size: 28px;
 			}
 			
-			
+			.task .mui-table-view .mui-navigate-right,
+			.task .mui-table-view .mui-collapse-content{
+				padding-left: 45px;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div class="mui-content">
-			<div class="brand"></div>
+			<div class="brand">
+				<a href="#menuPopover" class="mui-icon mui-icon-plusempty mui-pull-right" id="menuBtn" ></a>
+			</div>
 			
 			<div class="header">
 				<h1 class="header-title">任务大厅</h1>
@@ -67,96 +74,77 @@
 			<div class="tab">
 				<div class="mui-row">
 				    <div class="mui-col-xs-4">
-				    	<button type="button" class="mui-btn m-btn-warning mui-btn-block">任务市场</button>
+				    	<button type="button" class="mui-btn m-btn-warning mui-btn-block" id="allBtn">任务市场</button>
 				    </div>
 				    <div class="mui-col-xs-4">
-				    	<button type="button" class="mui-btn m-btn-danger mui-btn-block">今日任务</button>
+				    	<button type="button" class="mui-btn m-btn-danger mui-btn-block" id="todayBtn">今日任务</button>
 				    </div>
 				    <div class="mui-col-xs-4">
-				    	<button type="button" class="mui-btn m-btn-info mui-btn-block">其他任务</button>
+				    	<button type="button" class="mui-btn m-btn-info mui-btn-block" id="otherBtn">其他任务</button>
 				    </div>
 				</div>
 			</div>
 			
 		
 			<!--任务-->
-			<div class="task">
+			<div class="task" id="tasks">
 		
 				<!--任务列表-->
 				<div class="task-list">
 					<ul class="mui-table-view">
-						<li class="mui-table-view-cell mui-collapse mui-active">
+						<li class="mui-table-view-cell mui-collapse"
+							v-bind:class="{ 'mui-active': index == 0 }"
+							v-for="(task, index) in tasks">
 		
 							<a class="mui-navigate-right" href="#">
-								今日任务说明
-								<span class="task-expire">10/11</span>
-								<div class="star-item mui-pull-right">
-									<!--<i data-index="1" class="mui-icon iconfont icon-star mui-active"></i>
-									<i data-index="2" class="mui-icon iconfont icon-star mui-active"></i>
-									<i data-index="3" class="mui-icon iconfont icon-star mui-active"></i>
-									<i data-index="4" class="mui-icon iconfont icon-star"></i>
-									<i data-index="5" class="mui-icon iconfont icon-star"></i>-->
-									<span>赵牧一 </span>
-								</div>
-								<span class="mui-badge m-badge-square m-badge-info">等待</span>
+								{{task.task_name}}
+								<span class="task-expire">{{task.deadline_date}}</span>
+								<template v-if="!task.executive">
+									<div class="star-item mui-pull-right">
+										<i data-index="1" class="mui-icon iconfont icon-star" 
+	    									v-bind:class="{ 'mui-active': task.difficult >= 1 }"></i>
+	    								<i data-index="2" class="mui-icon iconfont icon-star"
+	    									v-bind:class="{ 'mui-active': task.difficult >= 2 }"></i>
+	    								<i data-index="3" class="mui-icon iconfont icon-star"
+	    									v-bind:class="{ 'mui-active': task.difficult >= 3 }"></i>
+	    								<i data-index="4" class="mui-icon iconfont icon-star"
+	    									v-bind:class="{ 'mui-active': task.difficult >= 4 }"></i>
+	    								<i data-index="5" class="mui-icon iconfont icon-star"
+	    									v-bind:class="{ 'mui-active': task.difficult >= 5 }"></i>
+									</div>
+									<span class="mui-badge m-badge-square m-badge-warning">等待</span>
+								</template>
+								<template v-else>
+									<span class="task-executive mui-ellipsis mui-pull-right">{{task.executive}} </span>
+									<span class="mui-badge m-badge-square m-badge-danger" v-if="task.status == 2">完成</span>
+									<span class="mui-badge m-badge-square m-badge-info" v-if="task.status == 1">进行</span>
+								</template>
 							</a>
 		
 							<div class="mui-collapse-content">
-								<p>今日任务内容</p>
+								<p>{{task.task_desc}}</p>
 								<div class="task-tag">
 									<div class="badge-item">
 										<span class="mui-badge m-badge-danger">tag</span>
-										<span class="mui-badge m-badge-warning">tag</span>
 									</div>
 									<div class="star-item">
-										<i data-index="1" class="mui-icon iconfont icon-star mui-active"></i>
-										<i data-index="2" class="mui-icon iconfont icon-star mui-active"></i>
-										<i data-index="3" class="mui-icon iconfont icon-star mui-active"></i>
-										<i data-index="4" class="mui-icon iconfont icon-star"></i>
-										<i data-index="5" class="mui-icon iconfont icon-star"></i>
+										<i data-index="1" class="mui-icon iconfont icon-star" 
+        									v-bind:class="{ 'mui-active': task.difficult >= 1 }"></i>
+        								<i data-index="2" class="mui-icon iconfont icon-star"
+        									v-bind:class="{ 'mui-active': task.difficult >= 2 }"></i>
+        								<i data-index="3" class="mui-icon iconfont icon-star"
+        									v-bind:class="{ 'mui-active': task.difficult >= 3 }"></i>
+        								<i data-index="4" class="mui-icon iconfont icon-star"
+        									v-bind:class="{ 'mui-active': task.difficult >= 4 }"></i>
+        								<i data-index="5" class="mui-icon iconfont icon-star"
+        									v-bind:class="{ 'mui-active': task.difficult >= 5 }"></i>
 									</div>
 								</div>
 								
 								<div class="status-item">
-									<!--<button type="button" class="mui-btn m-btn-warning status-action">领取</button>-->
-									<span class="status-show">赵牧一</span>
-								</div>
-							</div>
-		
-						</li>
-						<li class="mui-table-view-cell mui-collapse">
-		
-							<a class="mui-navigate-right" href="#">
-								今日任务说明
-								<span class="task-expire">10/11</span>
-								<div class="star-item mui-pull-right">
-									<i data-index="1" class="mui-icon iconfont icon-star mui-active"></i>
-									<i data-index="2" class="mui-icon iconfont icon-star mui-active"></i>
-									<i data-index="3" class="mui-icon iconfont icon-star mui-active"></i>
-									<i data-index="4" class="mui-icon iconfont icon-star"></i>
-									<i data-index="5" class="mui-icon iconfont icon-star"></i>
-								</div>
-								<span class="mui-badge m-badge-square m-badge-info">等待</span>
-							</a>
-		
-							<div class="mui-collapse-content">
-								<p>今日任务内容</p>
-								<div class="task-tag">
-									<div class="badge-item">
-										<span class="mui-badge m-badge-primary">tag</span>
-										<span class="mui-badge m-badge-danger">tag</span>
-									</div>
-									<div class="star-item">
-										<i data-index="1" class="mui-icon iconfont icon-star mui-active"></i>
-										<i data-index="2" class="mui-icon iconfont icon-star mui-active"></i>
-										<i data-index="3" class="mui-icon iconfont icon-star mui-active"></i>
-										<i data-index="4" class="mui-icon iconfont icon-star"></i>
-										<i data-index="5" class="mui-icon iconfont icon-star"></i>
-									</div>
-								</div>
-								
-								<div class="status-item">
-									<button type="button" class="mui-btn m-btn-warning status-action">领取</button>
+									<button type="button" class="mui-btn m-btn-warning status-action"
+										v-if="!task.executive">领取</button>
+									<span class="status-show mui-ellipsis" v-else>{{task.executive}}</span>
 								</div>
 							</div>
 		
@@ -167,9 +155,109 @@
 		
 		</div>
 		
+		<div id="menuPopover" class="mui-popover">
+			<ul class="mui-table-view">
+		    	<li class="mui-table-view-cell"><a href="#" id="myTaskBtn">我的任务</a></li>
+		    	<li class="mui-table-view-cell"><a href="#" id="changeTeamBtn">切换城堡</a></li>
+		    </ul>
+		</div>
+		
 		<script src="js/mui.min.js"></script>
+		<script src="js/vue.min.js"></script>
+		<script src="js/app.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			(function($, doc) {
+				
+				var memberId = plus.storage.getItem('member_id');
+				
+				var hall = new Vue({
+					el: "#tasks",
+					data: {
+						tasks: []
+					},
+					mounted: function(){
+						var vm = this; 
+						
+						$.plusReady(function () {
+							
+							var teamuuid = plus.storage.getItem('team_uuid');
+							
+							// 预加载团队页面
+							var teamPage = mui.preload({
+								url:'team.html',
+								id:'team.html'
+							})
+							
+							// 预加载我的任务页面
+							var myTaskPage = mui.preload({
+								url:'task.html',
+								id:'task.html'
+							})
+							
+							
+							window.addEventListener("get_hall_by_team",function(e){
+								var tranTeamuuid = e.detail.team_uuid;
+								console.log('传递的teamuuid', tranTeamuuid);
+								get_list(tranTeamuuid);
+							})
+							
+							// 获取任务大厅列表
+							function get_list(teamuuid, type=''){
+								mui.post(url+'Task/get_task_hall',{
+										team_uuid: teamuuid,
+										type: type
+									},function(data){
+										hall.tasks = data.data;
+										console.log('任务大厅', JSON.stringify(data.data))
+									},'json'
+								);
+							}
+							
+							// 切换团队
+							document.getElementById("changeTeamBtn").addEventListener("tap", function(){
+								mui("#menuPopover").popover('toggle'); // 关闭弹出菜单
+								
+								mui.fire(teamPage,'choose_team',{
+									team_uuid: teamuuid
+								})
+								mui.openWindow({
+							    	id:'team.html',
+							    	show:{
+							    		aniShow: "slide-in-bottom"
+							    	}
+							  	});
+							})
+							
+							// 跳转我的任务
+							document.getElementById("myTaskBtn").addEventListener("tap", function(){
+								mui("#menuPopover").popover('toggle'); // 关闭弹出菜单
+								
+								mui.openWindow({
+							    	id:'task.html',
+							  	});
+							})
+							
+							// 任务市场
+							document.getElementById("allBtn").addEventListener("tap", function(){
+								get_list(teamuuid);
+							})
+							
+							// 今日任务
+							document.getElementById("todayBtn").addEventListener("tap", function(){
+								get_list(teamuuid, 1);
+							})
+							
+							// 其他任务
+							document.getElementById("otherBtn").addEventListener("tap", function(){
+								get_list(teamuuid, 2);
+							})
+							
+						    
+						})
+					}
+				});
+				
+			}(mui, document));
 		</script>
 	</body>
 

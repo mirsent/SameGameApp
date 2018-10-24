@@ -102,15 +102,24 @@ p,h1{
 	background-color: #FACD00;
 	border-color: #FACD00;
 }
+.mui-btn.m-btn-warning:active{
+	background-color: #e2ba03;
+}
 .m-btn-danger{
 	color: #FFF;
 	background-color: #F55753;
 	border-color: #F55753;
 }
+.mui-btn.m-btn-danger:active{
+	background-color: #f33934;
+}
 .m-btn-info{
 	color: #FFF;
 	background-color: #06B4C7;
 	border-color: #06B4C7;
+}
+.mui-btn.m-btn-info:active{
+	background-color: #0591a0;
 }
 
 
@@ -155,4 +164,29 @@ p,h1{
 }
 .create-box .btn-cancel{
 	background: rgba(251, 172, 0, .7);
+}
+
+/*弹出菜单*/
+#menuPopover{
+	width:140px;
+	color: #FFF;
+	top: 60px !important;
+	background-color: transparent;
+	-webkit-box-shadow: none;
+			box-shadow: none;
+}
+#menuPopover .mui-table-view,
+#menuPopover .mui-popover-arrow:after{
+	background: #F55753;
+}
+#menuPopover .mui-table-view-cell:after{
+	right: 15px;
+	-webkit-box-shadow: 0 -1px 0 rgba(255, 255, 255, .2),
+						0 -2px 0 rgba(0, 0, 0, .2);
+			box-shadow: 0 -1px 0 rgba(255, 255, 255, .2),
+						0 -2px 0 rgba(0, 0, 0, .2);
+	background-color: transparent;
+}
+#menuPopover .mui-table-view-cell>a:not(.mui-btn).mui-active{
+	background-color: #f3423e;
 }

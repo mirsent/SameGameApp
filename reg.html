@@ -49,6 +49,11 @@
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
+					
+					window.addEventListener("swipeleft",function(){
+						$.back();
+					});
+					
 					var teamPage = $.preload({
 						"id": 'team',
 						"url": 'team.html'

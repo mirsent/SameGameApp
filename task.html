@@ -18,30 +18,6 @@
 				font-size: 24px;
 				margin-right: 4px;
 			}
-			
-			#menuPopover{
-				width:140px;
-				color: #FFF;
-				top: 60px !important;
-				background-color: transparent;
-				-webkit-box-shadow: none;
-						box-shadow: none;
-			}
-			#menuPopover .mui-table-view,
-			#menuPopover .mui-popover-arrow:after{
-				background: #F55753;
-			}
-			#menuPopover .mui-table-view-cell:after{
-				right: 15px;
-				-webkit-box-shadow: 0 -1px 0 rgba(255, 255, 255, .2),
-            						0 -2px 0 rgba(0, 0, 0, .2);
-            			box-shadow: 0 -1px 0 rgba(255, 255, 255, .2),
-            						0 -2px 0 rgba(0, 0, 0, .2);
-				background-color: transparent;
-			}
-			#menuPopover .mui-table-view-cell>a:not(.mui-btn).mui-active{
-				background-color: #f3423e;
-			}
 		</style>
 	</head>
 
@@ -139,7 +115,7 @@
 				    	</div>
 				    </div>
 				    
-				    <div class="mui-scroll-wrapper" style="top: 266px;">
+				    <div class="mui-scroll-wrapper" style="top: 266px;bottom: 50px;">
 				        <div class="mui-scroll">
 				        	<!--任务-->
 				        	<div class="task">
@@ -179,8 +155,7 @@
 				        						<p>{{task.task_desc}}</p>
 				        						<div class="task-tag">
 				        							<div class="badge-item">
-				        								<span class="mui-badge m-badge-danger">tag</span>
-				        								<span class="mui-badge m-badge-warning">tag</span>
+				        								<!--<span class="mui-badge m-badge-danger">tag</span>-->
 				        							</div>
 				        							<div class="star-item">
 				        								<i data-index="1" class="mui-icon iconfont icon-star" 
@@ -241,8 +216,7 @@
 				        						<p>{{task.task_desc}}</p>
 				        						<div class="task-tag">
 				        							<div class="badge-item">
-				        								<span class="mui-badge m-badge-danger">tag</span>
-				        								<span class="mui-badge m-badge-warning">tag</span>
+				        								<!--<span class="mui-badge m-badge-danger">tag</span>-->
 				        							</div>
 				        							<div class="star-item">
 				        								<i data-index="1" class="mui-icon iconfont icon-star" 
@@ -269,20 +243,21 @@
 				        			</ul>
 				        		</div>
 				        	</div>
-				        	<!--添加任务按钮-->
-				        	<button type="button" class="mui-btn mui-btn-sg mui-btn-block" id="addTask">
-		    		    		<i class="mui-icon iconfont icon-add" style="font-size: 45px;"></i>
-		    		    	</button>
 				        </div>
 				    </div>
 					
+					
+					<!--添加任务按钮-->
+		        	<button type="button" class="mui-btn mui-btn-sg mui-btn-block" id="addTask">
+    		    		<i class="mui-icon iconfont icon-add" style="font-size: 45px;"></i>
+    		    	</button>
 				</div>
 			</div>
 		</div>
 		
 		<div id="menuPopover" class="mui-popover">
 			<ul class="mui-table-view">
-		    	<li class="mui-table-view-cell"><a href="#">任务大厅</a></li>
+		    	<li class="mui-table-view-cell"><a href="#" id="hallBtn">任务大厅</a></li>
 		    	<li class="mui-table-view-cell"><a href="#" id="changeTeamBtn">切换城堡</a></li>
 		    </ul>
 		</div>
@@ -355,8 +330,14 @@
 								id:'team.html'
 							})
 							
+							// 预加载任务大厅页面
+							var hallPage = mui.preload({
+								url:'hall.html',
+								id:'hall.html'
+							})
+							
 							// 接收团队页传递参数
-							window.addEventListener("getTaskByTeam",function(e){
+							window.addEventListener("get_task_by_team",function(e){
 								var tranTeamuuid = e.detail.team_uuid;
 								console.log('传递的teamuuid', tranTeamuuid);
 								vm.get_today(tranTeamuuid);
@@ -394,7 +375,8 @@
 											console.log(JSON.stringify(data));
 											if (data.status) {
 												plus.nativeUI.toast('完成任务');
-												vm.get_today();
+												vm.get_today(teamuuid);
+												vm.get_other(teamuuid);
 											} else {
 												plus.nativeUI.toast('完成任务失败');
 											}
@@ -408,7 +390,8 @@
 											console.log(JSON.stringify(data));
 											if (data.status) {
 												plus.nativeUI.toast('回退任务');
-												vm.get_today();
+												vm.get_today(teamuuid);
+												vm.get_other(teamuuid);
 											} else {
 												plus.nativeUI.toast('回退任务失败');
 											}
@@ -512,7 +495,8 @@
 									},function(data){
 										offCanvasWrapper.offCanvas().close();
 										if (data.status == 1) {
-											vm.get_today();
+											vm.get_today(teamuuid);
+											vm.get_other(teamuuid);
 											plus.nativeUI.toast('发布任务成功');
 										} else {
 											plus.nativeUI.toast('发布任务失败，请稍后重试！');
@@ -527,8 +511,9 @@
 							
 							// 切换团队
 							document.getElementById("changeTeamBtn").addEventListener("tap", function(){
-								mui("#menuPopover").popover('toggle');
-								mui.fire(teamPage,'activeTeam',{
+								mui("#menuPopover").popover('toggle'); // 关闭弹出菜单
+								
+								mui.fire(teamPage,'choose_team',{
 									team_uuid: teamuuid
 								})
 								mui.openWindow({
@@ -536,6 +521,18 @@
 							    	show:{
 							    		aniShow: "slide-in-bottom"
 							    	}
+							  	});
+							})
+							
+							// 跳转任务大厅
+							document.getElementById("hallBtn").addEventListener("tap", function(){
+								mui("#menuPopover").popover('toggle'); // 关闭弹出菜单
+								
+								mui.fire(hallPage,'get_hall_by_team',{
+									team_uuid: teamuuid
+								})
+								mui.openWindow({
+							    	id:'hall.html',
 							  	});
 							})
 						});

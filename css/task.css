@@ -241,7 +241,10 @@
 .task-list .task-tag{
 	margin-top: 20px;
 }
-
+.task-list .task-executive{
+	display: inline-block;
+	width: 80px;
+}
 .task-list .mui-badge{
 	font-size: 14px;
 	padding: 4px 14px;
@@ -268,6 +271,7 @@
 	display: none;
 }
 .task-list .mui-table-view-cell.mui-active .mui-navigate-right .star-item,
+.task-list .mui-table-view-cell.mui-active .mui-navigate-right .task-executive,
 .task-list .mui-table-view-cell.mui-active .mui-navigate-right .mui-switch{
 	display: none;
 }

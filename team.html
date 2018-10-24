@@ -64,8 +64,15 @@
 						id:'task.html'
 					})
 					
+					// 接收登录传递参数
+					doc.addEventListener("get_team_by_member", function(e){
+						var tranMemberId = e.detail.member_id;
+						console.log("接收会员ID：", tranMemberId);
+						get_teams(tranMemberId);
+					})
+					
 					// 接收任务页传递参数
-					window.addEventListener("activeTeam",function(e){
+					doc.addEventListener("choose_team",function(e){
 						var activeTeamuuid = e.detail.team_uuid;
 						
 					})
@@ -80,10 +87,8 @@
 						event.stopPropagation();
 					});
 					
-					get_teams();
-					
 					// 获取数据并展示
-					function get_teams(){
+					function get_teams(memberId){
 						mui.post(url+'Team/get_team_join_list',{
 								member_id: memberId
 							},function(data){
@@ -147,7 +152,7 @@
 						var teamuuid = document.getElementsByClassName('mui-media on')[0].getAttribute('data-uuid');
 						plus.storage.setItem('team_uuid', teamuuid); // team_uuid存入缓存
 						
-						mui.fire(taskPage,'getTaskByTeam',{
+						mui.fire(taskPage,'get_task_by_team',{
 							team_uuid: teamuuid
 						})
 						$.openWindow({
@@ -172,7 +177,7 @@
 								offCanvasWrapper.offCanvas().close();
 								if (data.status == 1) {
 									plus.nativeUI.toast('新建城堡成功');
-									get_teams();
+									get_teams(memberId);
 								} else {
 									plus.nativeUI.toast('新建城堡失败，请稍后重试');
 								}

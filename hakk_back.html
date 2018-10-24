@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/task.css" rel="stylesheet" />
+		<style type="text/css">
+			
+			.header{
+				width: 100%;
+				height: 140px;
+				background: url(images/header_bg.png) no-repeat center;
+				background-size: 100%;
+				display: flex;
+				align-items: center;
+			}
+			.header-title{
+				font-weight: normal;
+				font-size: 26px;
+				color: #FFF;
+				width: 100%;
+				height: 50px;
+				line-height: 50px;
+				text-align: right;
+				padding-right: 30px;
+				background: rgba(245, 87, 83, .8);
+			}
+			
+			.tab{
+				margin-bottom: 10px;
+			}
+			.tab .mui-btn{
+				height: 40px;
+				border-radius: 0;
+				padding: 8px 0;
+			}
+			.status-item{
+				position: absolute;
+				right: 5px;
+				bottom: 40px;
+			}
+			.status-item .status-action{
+				font-size: 18px;
+				padding: 2px 20px;
+				border-radius: 0;
+			}
+			.status-item .status-show{
+				color: #CCC;
+				font-size: 28px;
+			}
+			
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="brand"></div>
+			
+			<div class="header">
+				<h1 class="header-title">任务大厅</h1>
+			</div>
+			<div class="tab">
+				<div class="mui-row">
+				    <div class="mui-col-xs-4">
+				    	<button type="button" class="mui-btn m-btn-warning mui-btn-block">任务市场</button>
+				    </div>
+				    <div class="mui-col-xs-4">
+				    	<button type="button" class="mui-btn m-btn-danger mui-btn-block">今日任务</button>
+				    </div>
+				    <div class="mui-col-xs-4">
+				    	<button type="button" class="mui-btn m-btn-info mui-btn-block">其他任务</button>
+				    </div>
+				</div>
+			</div>
+			
+		
+			<!--任务-->
+			<div class="task">
+		
+				<!--任务列表-->
+				<div class="task-list">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell mui-collapse mui-active">
+		
+							<a class="mui-navigate-right" href="#">
+								今日任务说明
+								<span class="task-expire">10/11</span>
+								<div class="star-item mui-pull-right">
+									<!--<i data-index="1" class="mui-icon iconfont icon-star mui-active"></i>
+									<i data-index="2" class="mui-icon iconfont icon-star mui-active"></i>
+									<i data-index="3" class="mui-icon iconfont icon-star mui-active"></i>
+									<i data-index="4" class="mui-icon iconfont icon-star"></i>
+									<i data-index="5" class="mui-icon iconfont icon-star"></i>-->
+								</div>
+								<span class="task-executive mui-ellipsis mui-pull-right">赵牧一 </span>
+								<span class="mui-badge m-badge-square m-badge-info">等待</span>
+							</a>
+		
+							<div class="mui-collapse-content">
+								<p>今日任务内容</p>
+								<div class="task-tag">
+									<div class="badge-item">
+										<span class="mui-badge m-badge-danger">tag</span>
+										<span class="mui-badge m-badge-warning">tag</span>
+									</div>
+									<div class="star-item">
+										<i data-index="1" class="mui-icon iconfont icon-star mui-active"></i>
+										<i data-index="2" class="mui-icon iconfont icon-star mui-active"></i>
+										<i data-index="3" class="mui-icon iconfont icon-star mui-active"></i>
+										<i data-index="4" class="mui-icon iconfont icon-star"></i>
+										<i data-index="5" class="mui-icon iconfont icon-star"></i>
+									</div>
+								</div>
+								
+								<div class="status-item">
+									<!--<button type="button" class="mui-btn m-btn-warning status-action">领取</button>-->
+									<span class="status-show">赵牧一</span>
+								</div>
+							</div>
+		
+						</li>
+						<li class="mui-table-view-cell mui-collapse">
+		
+							<a class="mui-navigate-right" href="#">
+								今日任务说明
+								<span class="task-expire">10/11</span>
+								<div class="star-item mui-pull-right">
+									<i data-index="1" class="mui-icon iconfont icon-star mui-active"></i>
+									<i data-index="2" class="mui-icon iconfont icon-star mui-active"></i>
+									<i data-index="3" class="mui-icon iconfont icon-star mui-active"></i>
+									<i data-index="4" class="mui-icon iconfont icon-star"></i>
+									<i data-index="5" class="mui-icon iconfont icon-star"></i>
+								</div>
+								<span class="mui-badge m-badge-square m-badge-info">等待</span>
+							</a>
+		
+							<div class="mui-collapse-content">
+								<p>今日任务内容</p>
+								<div class="task-tag">
+									<div class="badge-item">
+										<span class="mui-badge m-badge-primary">tag</span>
+										<span class="mui-badge m-badge-danger">tag</span>
+									</div>
+									<div class="star-item">
+										<i data-index="1" class="mui-icon iconfont icon-star mui-active"></i>
+										<i data-index="2" class="mui-icon iconfont icon-star mui-active"></i>
+										<i data-index="3" class="mui-icon iconfont icon-star mui-active"></i>
+										<i data-index="4" class="mui-icon iconfont icon-star"></i>
+										<i data-index="5" class="mui-icon iconfont icon-star"></i>
+									</div>
+								</div>
+								
+								<div class="status-item">
+									<button type="button" class="mui-btn m-btn-warning status-action">领取</button>
+								</div>
+							</div>
+		
+						</li>
+					</ul>
+				</div>
+			</div>
+		
+		</div>
+		
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+	</body>
+
+</html>

@@ -45,8 +45,13 @@
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
+					
+					doc.addEventListener("swipeleft",function(){
+						$.back();
+					});
+					
 					var teamPage = $.preload({
-						"id": 'team',
+						"id": 'team.html',
 						"url": 'team.html'
 					});
 					
@@ -72,11 +77,16 @@
 						}
 						
 						app.login(loginInfo, function(res) {
-							if (res == 1) {
+							if (res.status == 1) {
 								plus.nativeUI.toast('登录成功');
+								console.log('会员信息', JSON.stringify(res.data))
+								
 								setTimeout(function() {
+									$.fire(teamPage,'get_team_by_member',{
+										member_id: res.data.id
+									})
 									$.openWindow({
-										id: 'team',
+										id: 'team.html',
 										show: {
 											aniShow: 'pop-in'
 										},
@@ -84,7 +94,7 @@
 											autoShow: false
 										}
 									});
-								}, 1000);
+								}, 500);
 							} else {
 								plus.nativeUI.toast(res);
 							}
