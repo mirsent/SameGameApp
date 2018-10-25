@@ -18,6 +18,14 @@
 				font-size: 24px;
 				margin-right: 4px;
 			}
+			
+			#addTask{
+				position: fixed;
+				bottom: 0;
+				z-index: 9999;
+				margin-bottom: 0;
+				border: none;
+			}
 		</style>
 	</head>
 
@@ -63,7 +71,7 @@
 				
 				<div class="mui-content mui-scroll-wrapper" id="tasks">
 					<div class="brand">
-						<a href="#menuPopover" class="mui-icon mui-icon-plusempty mui-pull-right" id="menuBtn" ></a>
+						<a href="#menuPopover" class="mui-icon mui-icon-bars mui-pull-right" id="menuBtn" ></a>
 					</div>
 					
 				    <div class="role">
@@ -108,14 +116,14 @@
 				    			<li class="reward-star"><img src="images/star.png" class="reward-icon" />9999</li>
 				    			<li class="reward-money"><img src="images/money.png" class="reward-icon" />9999</li>
 				    		</ul>
-				    		<div class="notice">
+				    		<div class="notice" v-if="noticeShow">
 				    			<p class="notice-c">公告内容:这是公告~!</p>
-				    			<a href="javascript:;" class="notice-btn"></a>
+				    			<a href="javascript:;" class="notice-btn" id="noticeBtn"></a>
 				    		</div>
 				    	</div>
 				    </div>
 				    
-				    <div class="mui-scroll-wrapper" style="top: 266px;bottom: 50px;">
+				    <div class="mui-scroll-wrapper" id="taskScrollBox" style="top: 266px;bottom: 50px;">
 				        <div class="mui-scroll">
 				        	<!--任务-->
 				        	<div class="task">
@@ -245,11 +253,10 @@
 				        	</div>
 				        </div>
 				    </div>
-					
-					
+
 					<!--添加任务按钮-->
 		        	<button type="button" class="mui-btn mui-btn-sg mui-btn-block" id="addTask">
-    		    		<i class="mui-icon iconfont icon-add" style="font-size: 45px;"></i>
+    		    		<i class="mui-icon iconfont icon-add" style="font-size: 40px;"></i>
     		    	</button>
 				</div>
 			</div>
@@ -265,7 +272,6 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.picker.min.js"></script>
 		<script src="js/vue.min.js"></script>
-		<script src="js/vue-resource.min.js"></script>
 		<script src="js/app.js"></script>
 		<script type="text/javascript" charset="utf-8">
 	      	(function($, doc){
@@ -273,43 +279,19 @@
 				var memberName = plus.storage.getItem('member_name');
 				var teamuuid = plus.storage.getItem('team_uuid');
 				
-				var vue = new Vue({
+				doc.addEventListener("swipeleft",function(){
+					$.back();
+				});
+				
+				var task = new Vue({
 					el: '#tasks',
 					data:{
+						noticeShow: true,
 						memberInfo: {
 							member_name: plus.storage.getItem('member_name') 
 						},
 						taskToday: [],
 						taskOther: []
-					},
-					methods: {
-						// 今日任务
-						get_today: function(teamuuid){
-							this.$http.post(url+'Task/get_task_today_list',{
-								team_uuid: teamuuid,
-								task_executive_id: memberId
-							},{emulateJSON:true}).then(function(res){
-								console.log('今日任务', JSON.stringify(res.data.data))
-								this.taskToday = res.data.data;
-								
-								mui("#pbTask").progressbar({progress: res.data.data.rate}).show();
-							},function(res){
-								console.log(res.status);
-							});
-						},
-						get_other: function(teamuuid){
-							this.$http.post(url+'Task/get_task_other_list',{
-								team_uuid: teamuuid,
-								task_executive_id: memberId
-							},{emulateJSON:true}).then(function(res){
-								console.log('其他任务', JSON.stringify(res.data.data))
-								this.taskOther = res.data.data;
-								
-								mui("#pbTaskOther").progressbar({progress: res.data.data.rate}).show();
-							},function(res){
-								console.log(res.status);
-							});
-						}
 					},
 					mounted: function(){
 						var vm = this;
@@ -339,10 +321,38 @@
 							// 接收团队页传递参数
 							window.addEventListener("get_task_by_team",function(e){
 								var tranTeamuuid = e.detail.team_uuid;
-								console.log('传递的teamuuid', tranTeamuuid);
-								vm.get_today(tranTeamuuid);
-								vm.get_other(tranTeamuuid);
+								console.log('团队->teamuuid:', tranTeamuuid);
+								
+								get_today(tranTeamuuid);
+								get_other(tranTeamuuid);
 							})
+							
+							// 获取今日任务列表
+							function get_today(uuid){
+								mui.post(url+'Task/get_task_today_list',{
+										team_uuid: uuid,
+										task_executive_id: memberId
+									},function(res){
+										console.log('今日任务', JSON.stringify(res.data))
+										
+										task.taskToday = res.data;
+										mui("#pbTask").progressbar({progress: res.data.rate}).show();
+									},'json'
+								);
+							}
+							// 获取其他任务列表
+							function get_other(uuid){
+								mui.post(url+'Task/get_task_other_list',{
+										team_uuid: uuid,
+										task_executive_id: memberId
+									},function(res){
+										console.log('其他任务', JSON.stringify(res.data))
+										
+										task.taskOther = res.data;
+										mui("#pbTaskOther").progressbar({progress: res.data.rate}).show();
+									},'json'
+								);
+							}
 							
 							// 页面滚动
 							mui('.mui-scroll-wrapper').scroll({
@@ -375,8 +385,8 @@
 											console.log(JSON.stringify(data));
 											if (data.status) {
 												plus.nativeUI.toast('完成任务');
-												vm.get_today(teamuuid);
-												vm.get_other(teamuuid);
+												get_today(teamuuid);
+												get_other(teamuuid);
 											} else {
 												plus.nativeUI.toast('完成任务失败');
 											}
@@ -390,8 +400,8 @@
 											console.log(JSON.stringify(data));
 											if (data.status) {
 												plus.nativeUI.toast('回退任务');
-												vm.get_today(teamuuid);
-												vm.get_other(teamuuid);
+												get_today(teamuuid);
+												get_other(teamuuid);
 											} else {
 												plus.nativeUI.toast('回退任务失败');
 											}
@@ -495,8 +505,8 @@
 									},function(data){
 										offCanvasWrapper.offCanvas().close();
 										if (data.status == 1) {
-											vm.get_today(teamuuid);
-											vm.get_other(teamuuid);
+											get_today(teamuuid);
+											get_other(teamuuid);
 											plus.nativeUI.toast('发布任务成功');
 										} else {
 											plus.nativeUI.toast('发布任务失败，请稍后重试！');
@@ -534,6 +544,12 @@
 								mui.openWindow({
 							    	id:'hall.html',
 							  	});
+							})
+							
+							// 关闭公告
+							document.getElementById("noticeBtn").addEventListener("tap",function(){
+								task.noticeShow = false;
+								document.getElementById("taskScrollBox").style.top = '234px';
 							})
 						});
 					}

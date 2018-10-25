@@ -59,13 +59,20 @@
 			.task .mui-table-view .mui-collapse-content{
 				padding-left: 45px;
 			}
+			
+			/*弹出框样式*/
+			.mui-popup-inner,
+			.mui-popup-buttons .mui-popup-button{
+				color: #FFF;
+				background: rgba(245, 87, 83, .9) !important;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div class="mui-content">
 			<div class="brand">
-				<a href="#menuPopover" class="mui-icon mui-icon-plusempty mui-pull-right" id="menuBtn" ></a>
+				<a href="#menuPopover" class="mui-icon mui-icon-bars mui-pull-right" id="menuBtn" ></a>
 			</div>
 			
 			<div class="header">
@@ -142,7 +149,7 @@
 								</div>
 								
 								<div class="status-item">
-									<button type="button" class="mui-btn m-btn-warning status-action"
+									<button type="button" class="mui-btn m-btn-warning status-action" :data-id="task.id"
 										v-if="!task.executive">领取</button>
 									<span class="status-show mui-ellipsis" v-else>{{task.executive}}</span>
 								</div>
@@ -170,6 +177,10 @@
 				
 				var memberId = plus.storage.getItem('member_id');
 				
+				doc.addEventListener("swipeleft",function(){
+					$.back();
+				});
+				
 				var hall = new Vue({
 					el: "#tasks",
 					data: {
@@ -194,21 +205,23 @@
 								id:'task.html'
 							})
 							
-							
+							// task->
 							window.addEventListener("get_hall_by_team",function(e){
 								var tranTeamuuid = e.detail.team_uuid;
 								console.log('传递的teamuuid', tranTeamuuid);
+								
 								get_list(tranTeamuuid);
 							})
 							
 							// 获取任务大厅列表
-							function get_list(teamuuid, type=''){
+							function get_list(uuid, type=''){
+								document.getElementById("tasks").setAttribute("data-type", type);
 								mui.post(url+'Task/get_task_hall',{
-										team_uuid: teamuuid,
+										team_uuid: uuid,
 										type: type
 									},function(data){
+										console.log('任务大厅:', JSON.stringify(data.data))
 										hall.tasks = data.data;
-										console.log('任务大厅', JSON.stringify(data.data))
 									},'json'
 								);
 							}
@@ -252,7 +265,30 @@
 								get_list(teamuuid, 2);
 							})
 							
-						    
+							// 领取任务
+							mui(".task-list").on("tap", ".status-action", function(){
+								var taskId = this.getAttribute('data-id');
+								console.log('taskId:'+taskId);
+								console.log('memberId:'+memberId);
+								mui.confirm('确认领取该任务？','Hi',['再想想','确定'],function(e){
+									var index = e.index;
+									if (index) {
+										mui.post(url+'Task/receive_task',{
+												member_id: memberId,
+												task_id: taskId
+											},function(res){
+												if (res.status == 1) {
+													plus.nativeUI.toast(res.msg);
+													var hallType = document.getElementById("tasks").getAttribute("data-type");
+													get_list(teamuuid, hallType);
+												} else {
+													plus.nativeUI.toast(res.msg);
+												}
+											},'json'
+										);	
+									}
+								},'div')
+							})
 						})
 					}
 				});

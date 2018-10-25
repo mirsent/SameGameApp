@@ -82,7 +82,7 @@
 					var mailBox = doc.getElementById('mail');
 					loginBtn.addEventListener('tap', function(event) {
 						var memberInfo = {
-							mail: mailBox.value,
+							mail: mailBox.value
 						};
 						app.check(memberInfo, function(res) {
 							if (res == 1) {
