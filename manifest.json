@@ -103,11 +103,11 @@
 					"appstore": "C:/Users/mirse/Desktop/1024w/资源 4.png"
 				},
 				"android": {
-					"mdpi": "C:/Users/mirse/Desktop/0.75x/资源 5ldpi.png", /*普通屏程序图标，分辨率：48x48*/
-					"ldpi": "C:/Users/mirse/Desktop/0.75x/资源 5ldpi.png", /*大屏程序图标，分辨率：48x48*/
-					"hdpi": "C:/Users/mirse/Desktop/1.5x/资源 5hdpi.png", /*高分屏程序图标，分辨率：72x72*/
-					"xhdpi": "C:/Users/mirse/Desktop/1x/资源 5mdpi.png",/*720P高分屏程序图标，分辨率：96x96*/
-					"xxhdpi": "C:/Users/mirse/Desktop/2x/资源 5xhdpi.png","xxxhdpi":"C:/Users/mirse/Desktop/3x/资源 5xxhdpi.png"
+					"mdpi": "C:/Users/mirse/Desktop/48x48.png", /*普通屏程序图标，分辨率：48x48*/
+					"ldpi": "C:/Users/mirse/Desktop/48x48.png", /*大屏程序图标，分辨率：48x48*/
+					"hdpi": "C:/Users/mirse/Desktop/72x72.png", /*高分屏程序图标，分辨率：72x72*/
+					"xhdpi": "C:/Users/mirse/Desktop/96x96.png",/*720P高分屏程序图标，分辨率：96x96*/
+					"xxhdpi": "C:/Users/mirse/Desktop/144x144png.png","xxxhdpi":"C:/Users/mirse/Desktop/未标题-4.png"
 				}
 			},
 			"splashscreen": {
@@ -115,8 +115,7 @@
 					"iphone": {
 						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
 						/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
-						"retina40": "",
-						"retina47": "C:/Users/mirse/Desktop/1x/资源 14.png"
+						"retina40": ""
 					},
 					"ipad": {
 						"portrait": "", /*iPad竖屏启动图片，分辨率：768x1004*/
@@ -132,9 +131,9 @@
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
 					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": ""
+					"hdpi": "C:/Users/mirse/Desktop/480-800.png", /*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "C:/Users/mirse/Desktop/720-1280.png", /*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": "C:/Users/mirse/Desktop/1080-1920.png"
 				}
 			}
 		}
@@ -255,6 +254,14 @@
 					"task.html"
 				],
 				"priority": 0
+			},
+			"task.html": {
+				"resources": [],
+				"refer": [
+					"hall.html",
+					"setting.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {
@@ -267,6 +274,7 @@
 		}
 	},
 	"unpackage": [
-		"README.md"
+	  "README.md",
+	  "libs/easymob-webim-sdk/quickstart.md"
 	],"fullscreen":true
 }

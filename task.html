@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>任务大厅</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link href="css/mui.picker.min.css" rel="stylesheet" />
@@ -266,6 +266,7 @@
 			<ul class="mui-table-view">
 		    	<li class="mui-table-view-cell"><a href="#" id="hallBtn">任务大厅</a></li>
 		    	<li class="mui-table-view-cell"><a href="#" id="changeTeamBtn">切换城堡</a></li>
+		    	<li class="mui-table-view-cell"><a href="#" id="setBtn">设置</a></li>
 		    </ul>
 		</div>
 		
@@ -275,20 +276,12 @@
 		<script src="js/app.js"></script>
 		<script type="text/javascript" charset="utf-8">
 	      	(function($, doc){
-				var memberId = plus.storage.getItem('member_id');
-				var memberName = plus.storage.getItem('member_name');
-				var teamuuid = plus.storage.getItem('team_uuid');
-				
-				doc.addEventListener("swipeleft",function(){
-					$.back();
-				});
-				
 				var task = new Vue({
 					el: '#tasks',
 					data:{
 						noticeShow: true,
 						memberInfo: {
-							member_name: plus.storage.getItem('member_name') 
+							
 						},
 						taskToday: [],
 						taskOther: []
@@ -299,32 +292,42 @@
 						// 初始化mui
 						Vue.directive('mui', {
 					        bind: function (el, props) {
-					            setTimeout(() => { mui(el)[props.value](); })
+					        	setTimeout(function(){
+					        		mui(el)[props.value]();
+					        	},'');
 					        }
 					    });
 						
 						$.plusReady(function() {
 							$.init();
 							
+							var memberId = plus.storage.getItem('member_id');
+							var teamuuid = plus.storage.getItem('team_uuid');
+							task.memberInfo = plus.storage.getItem('member_name');
+							
+							doc.addEventListener("swipeleft",function(){
+								$.back();
+							});
+							
 							// 预加载团队页面
 							var teamPage = mui.preload({
 								url:'team.html',
 								id:'team.html'
-							})
+							});
 							
 							// 预加载任务大厅页面
 							var hallPage = mui.preload({
 								url:'hall.html',
 								id:'hall.html'
-							})
+							});
 							
-							// 接收团队页传递参数
+							// team->teamuuid
 							window.addEventListener("get_task_by_team",function(e){
-								var tranTeamuuid = e.detail.team_uuid;
-								console.log('团队->teamuuid:', tranTeamuuid);
+								teamuuid = e.detail.team_uuid;
+								console.log('team->teamuuid:', teamuuid);
 								
-								get_today(tranTeamuuid);
-								get_other(tranTeamuuid);
+								get_today(teamuuid);
+								get_other(teamuuid);
 							})
 							
 							// 获取今日任务列表
@@ -336,7 +339,7 @@
 										console.log('今日任务', JSON.stringify(res.data))
 										
 										task.taskToday = res.data;
-										mui("#pbTask").progressbar({progress: res.data.rate}).show();
+										mui("#pbTask").progressbar().setProgress(res.data.rate);
 									},'json'
 								);
 							}
@@ -349,7 +352,7 @@
 										console.log('其他任务', JSON.stringify(res.data))
 										
 										task.taskOther = res.data;
-										mui("#pbTaskOther").progressbar({progress: res.data.rate}).show();
+										mui("#pbTaskOther").progressbar().setProgress(res.data.rate);
 									},'json'
 								);
 							}
@@ -417,6 +420,7 @@
 								mui.post(url+'Member/get_members_by_team',{
 										'team_uuid': teamuuid
 									},function(data){
+										console.log(JSON.stringify(data.data));
 										// 人员选择器赋值
 										userPicker.setData(data.data);
 									},'json'
@@ -521,7 +525,7 @@
 							
 							// 切换团队
 							document.getElementById("changeTeamBtn").addEventListener("tap", function(){
-								mui("#menuPopover").popover('toggle'); // 关闭弹出菜单
+								mui("#menuPopover").popover('toggle');
 								
 								mui.fire(teamPage,'choose_team',{
 									team_uuid: teamuuid
@@ -536,14 +540,22 @@
 							
 							// 跳转任务大厅
 							document.getElementById("hallBtn").addEventListener("tap", function(){
-								mui("#menuPopover").popover('toggle'); // 关闭弹出菜单
+								mui("#menuPopover").popover('toggle');
 								
 								mui.fire(hallPage,'get_hall_by_team',{
 									team_uuid: teamuuid
 								})
 								mui.openWindow({
-							    	id:'hall.html',
+							    	id: 'hall.html',
 							  	});
+							})
+							
+							document.getElementById("setBtn").addEventListener("tap", function(){
+								mui("#menuPopover").popover('toggle');
+								mui.openWindow({
+									url: 'setting.html',
+									id: 'setting.html'
+								});
 							})
 							
 							// 关闭公告

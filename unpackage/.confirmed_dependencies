@@ -1,23 +1,29 @@
 {
-  "index.html": {
-    "refer": [
-      "login.html",
-      "reg.html"
-    ]
-  },
-  "reg.html": {
-    "refer": [
-      "team.html"
-    ]
-  },
-  "team.html": {
-    "refer": [
-      "task.html"
-    ]
-  },
-  "login.html": {
-    "refer": [
-      "team.html"
-    ]
-  }
+	"index.html": {
+		"refer": [
+			"login.html",
+			"reg.html"
+		]
+	},
+	"reg.html": {
+		"refer": [
+			"team.html"
+		]
+	},
+	"team.html": {
+		"refer": [
+			"task.html"
+		]
+	},
+	"login.html": {
+		"refer": [
+			"team.html"
+		]
+	},
+	"task.html": {
+		"refer": [
+			"hall.html",
+			"setting.html"
+		]
+	}
 }

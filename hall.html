@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>任务大厅</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link href="css/style.css" rel="stylesheet" />
@@ -175,8 +175,6 @@
 		<script type="text/javascript">
 			(function($, doc) {
 				
-				var memberId = plus.storage.getItem('member_id');
-				
 				doc.addEventListener("swipeleft",function(){
 					$.back();
 				});
@@ -190,7 +188,7 @@
 						var vm = this; 
 						
 						$.plusReady(function () {
-							
+							var memberId = plus.storage.getItem('member_id');
 							var teamuuid = plus.storage.getItem('team_uuid');
 							
 							// 预加载团队页面
@@ -207,14 +205,14 @@
 							
 							// task->
 							window.addEventListener("get_hall_by_team",function(e){
-								var tranTeamuuid = e.detail.team_uuid;
-								console.log('传递的teamuuid', tranTeamuuid);
+								teamuuid = e.detail.team_uuid;
+								console.log('传递的teamuuid', teamuuid);
 								
-								get_list(tranTeamuuid);
+								get_list(teamuuid);
 							})
 							
 							// 获取任务大厅列表
-							function get_list(uuid, type=''){
+							function get_list(uuid, type){
 								document.getElementById("tasks").setAttribute("data-type", type);
 								mui.post(url+'Task/get_task_hall',{
 										team_uuid: uuid,
