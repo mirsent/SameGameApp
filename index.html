@@ -35,73 +35,88 @@
 		<script>
 			(function($, doc) {
 				$.init();
+				
+				var teamPage = $.preload({
+					url: 'team.html',
+					id: 'team.html'
+				})
+				
 				$.plusReady(function() {
-					// 预加载页面
-					var loginPage = $.preload({
-						"id": 'login',
-						"url": 'login.html'
-					});
-					var regPage = $.preload({
-						"id": 'reg',
-						"url": 'reg.html'
-					});
 					
-					// 跳转登录页面
-					var toLogin = function() {
-						$.fire(loginPage, 'get_login', {
-							mail: mailBox.value
-						});
-						$.openWindow({
-							id: 'login',
-							show: {
-								aniShow: 'pop-in'
-							},
-							waiting: {
-								autoShow: false
-							}
-						});
-					};
+					var state = app.getState();
+					var memberId = state.id;
 					
-					// 跳转注册页面
-					var toReg = function() {
-						$.fire(regPage, 'get_reg', {
-							mail: mailBox.value
-						});
-						$.openWindow({
-							id: 'reg',
-							show: {
-								aniShow: 'pop-in'
-							},
-							waiting: {
-								autoShow: false
-							}
-						});
-					};
-					
-					var loginBtn = doc.getElementById('login');
-					var mailBox = doc.getElementById('mail');
-					loginBtn.addEventListener('tap', function(event) {
-						var memberInfo = {
-							mail: mailBox.value
+					// 自动登录
+					if(memberId){
+						mui.post(url+'Login/check_member',{
+								member_id: memberId
+							},function(res){
+								if (res.status == 1) {
+									var id = setInterval(function(){
+										if (teamPage) {
+											clearInterval(id);
+											$.fire(teamPage,'memberId',{
+												member_id: memberId
+											})
+											$.openWindow({
+												id: 'team.html'
+											})
+										}
+									}, 20)
+								}
+							},'json'
+						);
+					} else {
+						// 跳转登录页面
+						var toLogin = function(value) {
+							$.openWindow({
+								url: 'login.html',
+								id: 'login.html',
+								extras: {
+									mail: value
+								},
+								createNew: true
+							})
 						};
-						app.check(memberInfo, function(res) {
-							if (res == 1) {
-								plus.nativeUI.toast('请登录', {
-									verticalAlign: "center"
-								});
-								toLogin();
-							} else if (res == 2) {
-								plus.nativeUI.toast('请注册', {
-									verticalAlign: "center"
-								});
-								toReg();
-							} else {
-								plus.nativeUI.toast(res, {
-									verticalAlign: "center"
-								});
-							}
+						
+						// 跳转注册页面
+						var toReg = function(value) {
+							$.openWindow({
+								url: 'reg.html',
+								id: 'reg.html',
+								extras: {
+									mail: value
+								},
+								createNew: true
+							});
+						};
+						
+						var loginBtn = doc.getElementById('login');
+						var mailBox = doc.getElementById('mail');
+						loginBtn.addEventListener('tap', function(event) {
+							var mailValue = mailBox.value;
+							var memberInfo = {
+								mail: mailValue
+							};
+							app.check(memberInfo, function(res) {
+								if (res == 1) {
+									plus.nativeUI.toast('请登录', {
+										verticalAlign: "center"
+									});
+									toLogin(mailValue);
+								} else if (res == 2) {
+									plus.nativeUI.toast('请注册', {
+										verticalAlign: "center"
+									});
+									toReg(mailValue);
+								} else {
+									plus.nativeUI.toast(res, {
+										verticalAlign: "center"
+									});
+								}
+							});
 						});
-					});
+					}
 				});
 				
 			}(mui, document));

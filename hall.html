@@ -166,6 +166,7 @@
 			<ul class="mui-table-view">
 		    	<li class="mui-table-view-cell"><a href="#" id="myTaskBtn">我的任务</a></li>
 		    	<li class="mui-table-view-cell"><a href="#" id="changeTeamBtn">切换城堡</a></li>
+		    	<li class="mui-table-view-cell"><a href="#" id="setBtn">设置</a></li>
 		    </ul>
 		</div>
 		
@@ -213,11 +214,13 @@
 							
 							// 获取任务大厅列表
 							function get_list(uuid, type){
+								plus.nativeUI.showWaiting('加载中',{width:'100px',height:'100px'});
 								document.getElementById("tasks").setAttribute("data-type", type);
 								mui.post(url+'Task/get_task_hall',{
 										team_uuid: uuid,
 										type: type
 									},function(data){
+										plus.nativeUI.closeWaiting();
 										console.log('任务大厅:', JSON.stringify(data.data))
 										hall.tasks = data.data;
 									},'json'
@@ -287,6 +290,15 @@
 									}
 								},'div')
 							})
+						})
+						
+						// 跳转设置
+						document.getElementById("setBtn").addEventListener("tap", function(){
+							mui("#menuPopover").popover('toggle');
+							mui.openWindow({
+								url: 'setting.html',
+								id: 'setting.html'
+							});
 						})
 					}
 				});

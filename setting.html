@@ -9,6 +9,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
 		<style>
 			html,
 			body {
@@ -150,8 +151,8 @@
 		<div id="setting" class="mui-page">
 			<!--页面标题栏开始-->
 			<div class="mui-navbar-inner mui-bar mui-bar-nav">
-				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
-					<span class="mui-icon mui-icon-left-nav"></span>
+				<button type="button" class="mui-left mui-action-back mui-btn mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav font-sg"></span>
 				</button>
 				<h1 class="mui-center mui-title">设置</h1>
 			</div>
@@ -316,14 +317,9 @@
 			if (mui.os.ios) {
 				app.setState({});
 				mui.openWindow({
-					url: 'login.html',
-					id: 'login',
-					show: {
-						aniShow: 'pop-in'
-					},
-					waiting: {
-						autoShow: false
-					}
+					url: 'index.html',
+					id: 'index.html',
+					createNew: true
 				});
 				return;
 			}
@@ -341,15 +337,11 @@
 					case 1:
 						//注销账号
 						app.setState({});
-						plus.webview.getLaunchWebview().show("pop-in");
-						//若启动页不是登录页，则需通过如下方式打开登录页
-//						mui.openWindow({
-//							url: 'login.html',
-//							id: 'login',
-//							show: {
-//								aniShow: 'pop-in'
-//							}
-//						});
+						mui.openWindow({
+							url: 'index.html',
+							id: 'index.html',
+							createNew: true
+						});
 						break;
 					case 2:
 						plus.runtime.quit();

@@ -14,16 +14,15 @@
     </head>
 
     <body>
-        
         <!--侧滑菜单容器-->
-        <div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable mui-scalable">
+        <div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable mui-scalable vue-team">
             <!--创建城堡菜单-->
             <aside id="offCanvasSide" class="mui-off-canvas-right">
                 <div id="offCanvasSideScroll" class="mui-scroll-wrapper">
                     <div class="mui-scroll">
                         <div class="create-box">
                             <h2 class="title">创建城堡</h2>
-                            <input type="text" class="input-name" id="teamName" placeholder="城堡名称">
+                            <input type="text" class="input-name" id="teamName" placeholder="城堡名称" :value="newData.team_name">
                             <div class="mui-button-row">
                                 <button type="button" class="mui-btn btn-confirm" id="confirm">决定</button>
                                 <button type="button" class="mui-btn btn-cancel" id="cancle">取消</button>
@@ -38,7 +37,7 @@
                     <div class="mui-scroll">
                         <div class="create-box">
                             <h2 class="title">加入城堡</h2>
-                            <input type="text" class="input-name" id="teamNo" placeholder="城堡编号">
+                            <input type="text" class="input-name" id="teamNo" placeholder="城堡编号" :value="newData.team_no">
                             <div class="mui-button-row">
                                 <button type="button" class="mui-btn btn-confirm" id="joinConfirm">决定</button>
                                 <button type="button" class="mui-btn btn-cancel" id="joinCancle">取消</button>
@@ -54,9 +53,9 @@
                         <a href="#menuPopover" class="mui-icon mui-icon-plusempty mui-pull-right" id="menuBtn" ></a>
                     </div>
                     
-                    <div class="team">
+                    <div class="team" id="team">
                         <span class="team-label">请选择您要继续游戏的<em>城堡</em></span>
-                        <div class="team-list" id="teams">
+                        <div class="team-list">
                             <ul class="mui-table-view">
 							    <li class="mui-table-view-cell mui-media"
 							    	v-for="(team, index) in teams"
@@ -116,31 +115,41 @@
                 
                 $.init();
                 
-//              plus.storage.clear();
-                
                 var team = new Vue({
-                	el: "#teams",
+                	el: ".vue-team",
                 	data: {
-                		teams: []
+                		teams: [],
+                		newData: {
+                			team_name: '',
+                			team_no: ''
+                		}
+                	},
+                	methods: {
+                		get_teams: function(memberId){
+                			mui.post(url+'Team/get_team_join_list',{
+	                                member_id: memberId
+	                            },function(data){
+	                            	console.log('团队:',JSON.stringify(data.data));
+	                            	team.teams = data.data;
+	                            },'json'
+	                        );
+                		}
                 	},
                 	mounted: function(){
-                		var vm = this;
-                		
+                		var _vue = this;
+            			var memberId;
+            			
+            			doc.addEventListener('memberId',function(event){
+            				memberId = event.detail.member_id;
+            				console.log('login->memberId:', memberId);
+            				_vue.get_teams(memberId);
+            			});
+						
                 		$.plusReady(function() {
-                    
-							var memberId = plus.storage.getItem('member_id');
-		                    
-		                    // 预加载任务页面
+                			
 		                    var taskPage = mui.preload({
 		                        url:'task.html',
 		                        id:'task.html'
-		                    })
-		                    
-		                    // login->memberId
-		                    doc.addEventListener("get_team_by_member", function(e){
-		                        memberId = e.detail.member_id;
-		                        console.log("login->memberId:", memberId);
-		                        get_teams(memberId);
 		                    })
 		                    
 		                    // 接收任务页传递参数
@@ -149,46 +158,16 @@
 		                        
 		                    })
 		                    
-		                    var offCanvasWrapper = mui('#offCanvasWrapper'); // 侧滑菜单容器
-		                    var offCanvasSide = offCanvasWrapper[0].querySelector('#offCanvasSide');
-		                    var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap'); 
-//		                  	offCanvasSide.addEventListener('drag', function(event) {
-//		                      	event.stopPropagation();
-//		                  	});
-		                    offCanvasInner.addEventListener('drag', function(event) {
-		                        event.stopPropagation();
-		                    });
-		                    
-		                    // 获取数据并展示
-		                    function get_teams(memberId){
-		                        mui.post(url+'Team/get_team_join_list',{
-		                                member_id: memberId
-		                            },function(data){
-		                            	console.log('团队:',JSON.stringify(data.data));
-		                            	team.teams = data.data;
-		                            },'json'
-		                        );
-		                    }
-		                    
-		                    // 选择城堡
-                            mui(".mui-table-view").on('tap','.mui-table-view-cell',function(){
-                                if( this.classList.contains('btn-add') ){
-                                    offCanvasWrapper.offCanvas().show();
-                                } else {
-                                    mui('.mui-table-view-cell').each(function(){
-                                        this.classList.remove('on')
-                                    })
-                                    this.classList.add('on');
-                                }
-                            })
-		                    
-		                    // 点击继续游戏
+		                    // 选择团队进入
 		                    var nextBtn = doc.getElementById('next');
 		                    nextBtn.addEventListener('tap', function(){
+		                    	if (team.teams.length == 0) {
+		                    		plus.nativeUI.toast('请先创建城堡');
+		                            return;
+		                    	}
 		                        var teamuuid = document.getElementsByClassName('mui-media on')[0].getAttribute('data-uuid');
-		                        plus.storage.setItem('team_uuid', teamuuid);
 		                        
-		                        mui.fire(taskPage,'get_task_by_team',{
+		                        mui.fire(taskPage,'teamuuid',{
 		                            team_uuid: teamuuid
 		                        })
 		                        $.openWindow({
@@ -214,16 +193,12 @@
 		                                offCanvasWrapper.offCanvas().close();
 		                                if (data.status == 1) {
 		                                    plus.nativeUI.toast('新建城堡成功');
-		                                    get_teams(memberId);
+		                                    team.get_teams(memberId);
 		                                } else {
 		                                    plus.nativeUI.toast('新建城堡失败，请稍后重试');
 		                                }
 		                            },'json'
 		                        );
-		                    })
-		                    // 取消添加团队
-		                    document.getElementById("cancle").addEventListener("tap",function(){
-		                        offCanvasWrapper.offCanvas().close();
 		                    })
 		                    
 		                    // 加入团队
@@ -245,7 +220,7 @@
 		                            },function(res){
 		                                if (res.status == 1) {
 		                                    plus.nativeUI.toast('加入城堡成功');
-		                                    get_teams(memberId);
+		                                    team.get_teams(memberId);
 		                                    offCanvasWrapper.offCanvas().close();
 		                                } else {
 		                                    plus.nativeUI.toast(res.msg);
@@ -254,6 +229,33 @@
 		                        );
 		                    })
 		                });
+		                
+		                var offCanvasWrapper = mui('#offCanvasWrapper'); // 侧滑菜单容器
+	                    var offCanvasSide = offCanvasWrapper[0].querySelector('#offCanvasSide');
+	                    var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap'); 
+	                    offCanvasInner.addEventListener('drag', function(event) {
+	                        event.stopPropagation();
+	                    });
+	                    document.querySelector('.mui-off-canvas-wrap').addEventListener('hidden',function (event) {
+	                    	_vue.newData = {};
+						})
+	                    
+	                    // 点击选择团队
+                        mui(".mui-table-view").on('tap','.mui-table-view-cell',function(){
+                            if( this.classList.contains('btn-add') ){
+                                offCanvasWrapper.offCanvas().show();
+                            } else {
+                                mui('.mui-table-view-cell').each(function(){
+                                    this.classList.remove('on')
+                                })
+                                this.classList.add('on');
+                            }
+                        })
+	                    
+	                    // 取消添加团队
+	                    document.getElementById("cancle").addEventListener("tap",function(){
+	                        offCanvasWrapper.offCanvas().close();
+	                    })
                 	}
                 })
                 

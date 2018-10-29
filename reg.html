@@ -54,15 +54,14 @@
 						$.back();
 					});
 					
-					var teamPage = $.preload({
-						"id": 'team',
-						"url": 'team.html'
-					});
+					var self = plus.webview.currentWebview();
+					var mail = self.mail;
+					document.getElementById("mail").value = mail;
 					
-					doc.addEventListener('get_reg', function(event){
-						var mail = event.detail.mail;
-						document.getElementById("mail").value = mail;
-					});
+					var teamPage = $.preload({
+						url: 'team.html',
+						id: 'team.html'
+					})
 					
 					var regButton = doc.getElementById('reg');
 					var mailBox = doc.getElementById('mail'),
@@ -86,16 +85,9 @@
 							if (res == 1) {
 								plus.nativeUI.toast('注册成功');
 								setTimeout(function() {
-									$.openWindow({
-										id: 'team',
-										show: {
-											aniShow: 'pop-in'
-										},
-										waiting: {
-											autoShow: false
-										}
-									});
-								}, 2000);
+									$.fire(teamPage, 'show', null);
+									teamPage.show('pop-in');
+								}, 1000);
 							} else {
 								plus.nativeUI.toast(res);
 							}

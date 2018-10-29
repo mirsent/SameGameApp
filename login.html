@@ -44,6 +44,7 @@
 		<script>
 			(function($, doc) {
 				$.init();
+				
 				$.plusReady(function() {
 					
 					doc.addEventListener("swipeleft",function(){
@@ -51,14 +52,13 @@
 					});
 					
 					var teamPage = $.preload({
-						"id": 'team.html',
-						"url": 'team.html'
+						url: 'team.html',
+						id: 'team.html'
 					});
 					
-					doc.addEventListener('get_login', function(event){
-						var mail = event.detail.mail;
-						document.getElementById("mail").value = mail;
-					})
+					var self = plus.webview.currentWebview();
+					var mail = self.mail;
+					document.getElementById("mail").value = mail;
 					
 					var loginButton = doc.getElementById('login');
 					var mailBox = doc.getElementById('mail'),
@@ -66,40 +66,33 @@
 					
 					loginButton.addEventListener('tap', function(event) {
 						
-						var loginInfo = {
-							mail: mailBox.value,
-							password: passwordBox.value,
-						};
-						
 						if (passwordBox.value.length == 0) {
 							plus.nativeUI.toast('密码不能为空');
 							return;
 						}
 						
-						app.login(loginInfo, function(res) {
-							if (res.status == 1) {
-								plus.nativeUI.toast('登录成功');
-								console.log('会员信息', JSON.stringify(res.data))
-								
-								setTimeout(function() {
-									$.fire(teamPage,'get_team_by_member',{
-										member_id: res.data.id
-									})
-									$.openWindow({
-										id: 'team.html',
-										show: {
-											aniShow: 'pop-in'
-										},
-										waiting: {
-											autoShow: false
-										}
+						mui.post(url+'Login/login',{
+								mail: mailBox.value,
+								password: passwordBox.value
+							},function(res){
+								plus.nativeUI.toast(res.msg);
+								if (res.status == 1) {
+									var userInfo = res.data;
+									console.log('登录信息:', JSON.stringify(userInfo));
+									app.createState(userInfo);
+									
+									$.fire(teamPage,'memberId',{
+										member_id: userInfo.id
 									});
-								}, 500);
-							} else {
-								plus.nativeUI.toast(res);
-							}
-						});
+									$.openWindow({
+										id: 'team.html'
+									})
+								}
+							},'json'
+						);
 					});
+					
+					
 				});
 			}(mui, document));
 		</script>

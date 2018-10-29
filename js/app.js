@@ -13,9 +13,11 @@ var url = 'http://samegame.ineinv.com/index.php/Home/';
 			return callback('邮箱地址不合法');
 		}
 		// 验证邮箱
+		plus.nativeUI.showWaiting('加载中',{width:'100px',height:'100px'});
 		mui.post(url+'Login/check_email',{
 				mail: memberInfo.mail
 			},function(data){
+				plus.nativeUI.closeWaiting();
 				if (data.status == 1) {
 					return callback(1); // 已注册
 				} else {
@@ -70,39 +72,23 @@ var url = 'http://samegame.ineinv.com/index.php/Home/';
 		mui.post(url+'Login/register',{
 				mail: regInfo.mail,
 				password: regInfo.password
-			},function(data){
-				if (data.status == 1) {
-					return callback(1); // 注册成功
+			},function(res){
+				if (res.status == 1) {
+					var userInfo = res.data;
+					owner.createState(userInfo);
+					return callback(1);
 				} else {
-					return callback('注册失败,请稍后重试'); // 注册失败
+					return callback(res.msg); // 注册失败
 				}
 			},'json'
 		);
 	};
 	
-	/**
-	 * 用户登录
-	 **/
-	owner.login = function(loginInfo, callback) {
-		callback = callback || $.noop;
-		loginInfo = loginInfo || {};
-		loginInfo.mail = loginInfo.mail || '';
-		loginInfo.password = loginInfo.password || '';
-		
-		mui.post(url+'Login/login',{
-				mail: loginInfo.mail,
-				password: loginInfo.password
-			},function(data){
-				if (data.status == 1) {
-					// 会员信息存入缓存
-					plus.storage.setItem('member_id', data.data.id);
-					plus.storage.setItem('member_name', data.data.member_name);
-					return callback(data); // 登录成功
-				} else {
-					return callback('密码错误');
-				}
-			},'json'
-		);
+	owner.createState = function(user) {
+		var state = owner.getState();
+		state.id = user.id;
+		state.member_name = user.member_name;
+		owner.setState(state);
 	};
 
 	/**
@@ -114,6 +100,22 @@ var url = 'http://samegame.ineinv.com/index.php/Home/';
 			return callback('邮箱地址不合法');
 		}
 		return callback(null, '新的随机密码已经发送到您的邮箱，请查收邮件。');
+	};
+	
+	/**
+	 * 获取当前状态
+	 **/
+	owner.getState = function() {
+		var stateText = localStorage.getItem('$state') || "{}";
+		return JSON.parse(stateText);
+	};
+
+	/**
+	 * 设置当前状态
+	 **/
+	owner.setState = function(state) {
+		state = state || {};
+		localStorage.setItem('$state', JSON.stringify(state));
 	};
 
 	/**

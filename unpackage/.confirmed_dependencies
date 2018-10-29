@@ -2,7 +2,8 @@
 	"index.html": {
 		"refer": [
 			"login.html",
-			"reg.html"
+			"reg.html",
+			"team.html"
 		]
 	},
 	"reg.html": {
@@ -23,7 +24,16 @@
 	"task.html": {
 		"refer": [
 			"hall.html",
-			"setting.html"
+			"setting.html",
+			"task_sub.html"
+		],
+		"resources": [
+			"task_sub.html"
+		]
+	},
+	"setting.html": {
+		"refer": [
+			"index.html"
 		]
 	}
 }

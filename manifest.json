@@ -103,11 +103,11 @@
 					"appstore": "C:/Users/mirse/Desktop/1024w/资源 4.png"
 				},
 				"android": {
-					"mdpi": "C:/Users/mirse/Desktop/48x48.png", /*普通屏程序图标，分辨率：48x48*/
-					"ldpi": "C:/Users/mirse/Desktop/48x48.png", /*大屏程序图标，分辨率：48x48*/
-					"hdpi": "C:/Users/mirse/Desktop/72x72.png", /*高分屏程序图标，分辨率：72x72*/
-					"xhdpi": "C:/Users/mirse/Desktop/96x96.png",/*720P高分屏程序图标，分辨率：96x96*/
-					"xxhdpi": "C:/Users/mirse/Desktop/144x144png.png","xxxhdpi":"C:/Users/mirse/Desktop/未标题-4.png"
+					"mdpi": "F:/ui/samegame/48x48.png", /*普通屏程序图标，分辨率：48x48*/
+					"ldpi": "F:/ui/samegame/48x48.png", /*大屏程序图标，分辨率：48x48*/
+					"hdpi": "F:/ui/samegame/72x72.png", /*高分屏程序图标，分辨率：72x72*/
+					"xhdpi": "F:/ui/samegame/96x96.png",/*720P高分屏程序图标，分辨率：96x96*/
+					"xxhdpi": "F:/ui/samegame/144x144png.png","xxxhdpi":"F:/ui/samegame/未标题-4.png"
 				}
 			},
 			"splashscreen": {
@@ -131,9 +131,9 @@
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
 					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "C:/Users/mirse/Desktop/480-800.png", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "C:/Users/mirse/Desktop/720-1280.png", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": "C:/Users/mirse/Desktop/1080-1920.png"
+					"hdpi": "F:/ui/samegame/480-800.png", /*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "F:/ui/samegame/720-1280.png", /*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": "F:/ui/samegame/1080-1920.png"
 				}
 			}
 		}
@@ -159,7 +159,8 @@
 					"images/iconfont-tianjia.png"
 				],
 				"refer": [
-					"login.html"
+					"login.html",
+					"index.html"
 				],
 				"priority": 1
 			},
@@ -244,7 +245,8 @@
 				"resources": [],
 				"refer": [
 					"login.html",
-					"reg.html"
+					"reg.html",
+					"team.html"
 				],
 				"priority": 0
 			},
@@ -256,7 +258,9 @@
 				"priority": 0
 			},
 			"task.html": {
-				"resources": [],
+				"resources": [
+					"task_sub.html"
+				],
 				"refer": [
 					"hall.html",
 					"setting.html"
