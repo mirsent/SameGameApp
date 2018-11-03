@@ -47,7 +47,7 @@ p,h1{
 	height: 60px;
 	background: url(../images/brand.png) no-repeat 20px center;
 	background-color: #FFF;
-	background-size: 70%;
+	background-size: content;
 }
 .brand .mui-icon{
 	line-height: 60px;

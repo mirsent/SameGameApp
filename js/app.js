@@ -57,33 +57,6 @@ var url = 'http://samegame.ineinv.com/index.php/Home/';
 	    return false;
 	};
 
-	/**
-	 * 新用户注册
-	 **/
-	owner.reg = function(regInfo, callback) {
-		callback = callback || $.noop;
-		regInfo = regInfo || {};
-		regInfo.mail = regInfo.mail || '';
-		regInfo.password = regInfo.password || '';
-		if (regInfo.password.length < 6 || regInfo.password.length > 18) {
-			return callback('密码长度在6至18位之间');
-		}
-		
-		mui.post(url+'Login/register',{
-				mail: regInfo.mail,
-				password: regInfo.password
-			},function(res){
-				if (res.status == 1) {
-					var userInfo = res.data;
-					owner.createState(userInfo);
-					return callback(1);
-				} else {
-					return callback(res.msg); // 注册失败
-				}
-			},'json'
-		);
-	};
-	
 	owner.createState = function(user) {
 		var state = owner.getState();
 		state.id = user.id;

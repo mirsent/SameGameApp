@@ -298,9 +298,8 @@
 						
 						$.plusReady(function() {
 							
-							var state;
-							var memberId;
-							var teamuuid;
+							var memberId = plus.storage.getItem('memberId');
+							var teamuuid = plus.storage.getItem('teamuuid');
 							
 							doc.addEventListener("swipeleft",function(){
 								$.back();
@@ -320,12 +319,11 @@
 							
 							// team->member_id,teamuuid
 							window.addEventListener("teamuuid",function(e){
-								state = app.getState();
-								memberId = state.id;
+								memberId = plus.storage.getItem('memberId');
 								teamuuid = e.detail.team_uuid;
 								console.log('team->teamuuid:', teamuuid);
 								
-								_vue.memberName = state.member_name;
+								_vue.memberName = plus.storage.getItem('memberName');
 								
 								get_today(teamuuid);
 								get_other(teamuuid);
@@ -503,10 +501,6 @@
 								}
 								if (!deadlineTime) {
 									plus.nativeUI.toast('截止时间还没选');
-									return;
-								}
-								if (!taskExecutiveId) {
-									plus.nativeUI.toast('执行人还没选');
 									return;
 								}
 								

@@ -79,7 +79,8 @@
 								if (res.status == 1) {
 									var userInfo = res.data;
 									console.log('登录信息:', JSON.stringify(userInfo));
-									app.createState(userInfo);
+                                    plus.storage.setItem('memberId',userInfo.id);
+                                    plus.storage.setItem('memberName',userInfo.member_name);
 									
 									$.fire(teamPage,'memberId',{
 										member_id: userInfo.id

@@ -81,17 +81,31 @@
 							plus.nativeUI.toast('密码两次输入不一致');
 							return;
 						}
-						app.reg(regInfo, function(res) {
-							if (res == 1) {
-								plus.nativeUI.toast('注册成功');
-								setTimeout(function() {
-									$.fire(teamPage, 'show', null);
+						
+						if (regInfo.password.length < 6 || regInfo.password.length > 18) {
+							plus.nativeUI.toast('密码长度在6至18位之间');
+							return;
+						}
+						
+						mui.post(url+'Login/register',{
+								mail: regInfo.mail,
+								password: regInfo.password
+							},function(res){
+								if (res.status == 1) {
+									var userInfo = res.data;
+									plus.storage.setItem('memberId',userInfo.id);
+									plus.storage.setItem('memberName',userInfo.member_name);
+									
+									plus.nativeUI.toast('注册成功');
+									$.fire(teamPage, 'memberId', {
+										member_id: userInfo.id
+									});
 									teamPage.show('pop-in');
-								}, 1000);
-							} else {
-								plus.nativeUI.toast(res);
-							}
-						});
+								} else {
+									plus.nativeUI.toast(res.msg);
+								}
+							},'json'
+						);
 					});
 				});
 			}(mui, document));
