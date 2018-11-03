@@ -1,13 +1,14 @@
-.role-t{
+.role-t {
 	/* display: flex; */
 }
-.role-t .head{
+
+.role-t .head {
 	width: 140px;
 	height: 140px;
 }
 
 /*角色信息*/
-.role .info{
+.role .info {
 	padding: 5px 0;
 	height: 140px;
 	background: #F55753;
@@ -17,47 +18,55 @@
 }
 
 /* 名称职业头像 */
-.info-title .mui-table-view{
+.info-title .mui-table-view {
 	background: transparent;
 	border: none;
 }
+
 .info-title .mui-table-view:before,
-.info-title .mui-table-view:after{
+.info-title .mui-table-view:after {
 	background-color: transparent;
 }
-.info-title .mui-table-view-cell{
+
+.info-title .mui-table-view-cell {
 	padding: 5px 10px;
 }
-.info-title .mui-table-view-cell>a:not(.mui-btn){
+
+.info-title .mui-table-view-cell>a:not(.mui-btn) {
 	margin: 0;
 	padding: 0;
 }
-.info-title .mui-table-view-cell>a:not(.mui-btn).mui-active{
+
+.info-title .mui-table-view-cell>a:not(.mui-btn).mui-active {
 	background-color: transparent;
 }
-.info-head{
+
+.info-head {
 	width: 50px;
 	height: 50px;
 }
-.info-name{
+
+.info-name {
 	width: 100%;
 	font-size: 20px;
 	font-weight: normal;
 	margin-bottom: 0;
 }
-.info-job{
+
+.info-job {
 	font-size: 14px;
 	color: #F9BDBD;
 }
 
 
 
-.role .info-item{
+.role .info-item {
 	display: flex;
 	padding: 10px;
 	align-items: center;
 }
-.info-rate{
+
+.info-rate {
 	font-size: 14px;
 }
 
@@ -66,54 +75,62 @@
 	height: 18px;
 	border-radius: 0;
 }
-.role .mui-progressbar{
+
+.role .mui-progressbar {
 	width: 50%;
 	background: #E6E6E6;
 	margin-right: 6px;
 }
+
 .icon-blood,
-.icon-magic{
+.icon-magic {
 	width: 26px;
 	margin-right: 10px;
 }
-.info-blood .mui-progressbar span{
+
+.info-blood .mui-progressbar span {
 	background: #8F1C25;
 }
-.info-magic .mui-progressbar span{
+
+.info-magic .mui-progressbar span {
 	background: #10CFBD;
 }
 
 /*角色奖励*/
-.reward{
+.reward {
 	margin: 0;
 	padding: 0;
 	background: #28E1E5;
 	display: flex;
 	justify-content: space-around;
 }
-.reward li{
+
+.reward li {
 	color: #FFF;
 	list-style: none;
 	height: 34px;
 	display: flex;
 	align-items: center;
 }
-.reward .reward-icon{
+
+.reward .reward-icon {
 	width: 28px;
 }
 
 /*公告*/
-.notice{
+.notice {
 	background: #FEF6DD;
 	padding: 2px 10px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
-.notice-c{
+
+.notice-c {
 	color: #967F35;
 }
-.notice-btn{
+
+.notice-btn {
 	display: inline-block;
 	width: 28px;
 	height: 28px;
@@ -124,35 +141,38 @@
 
 /*展开、关闭图标*/
 .task .mui-table-view .mui-navigate-right,
-.task .mui-table-view .mui-collapse-content{
+.task .mui-table-view .mui-collapse-content {
 	padding-left: 60px;
 	padding-right: 5px;
 	background: #efeff4;
 }
+
 .task .mui-navigate-right:after,
-.task .mui-push-right:after{
+.task .mui-push-right:after {
 	left: 12px;
 	font-size: 22px;
 }
+
 .task .mui-table-view-cell.mui-collapse>.mui-navigate-right:after,
-.task .mui-table-view-cell.mui-collapse>.mui-push-right:after{
+.task .mui-table-view-cell.mui-collapse>.mui-push-right:after {
 	font-family: Micons;
 	content: '\e6a3';
 }
+
 .task .mui-table-view-cell.mui-active.mui-collapse>.mui-navigate-right:after,
-.task .mui-table-view-cell.mui-active.mui-collapse>.mui-push-right:after{
+.task .mui-table-view-cell.mui-active.mui-collapse>.mui-push-right:after {
 	font-family: Micons;
 	content: '\e627';
 	font-size: 28px;
 	color: #33414F;
 }
 
-.task .task-list .mui-navigate-right{
+.task .task-list .mui-navigate-right {
 	color: #94979B;
 }
 
 /*开关*/
-.task .mui-switch{
+.task .mui-switch {
 	width: 40px;
 	height: 24px;
 	border: 2px solid #A0B0BC;
@@ -161,20 +181,24 @@
 	right: 20px !important;
 	z-index: 9999;
 }
+
 .task .mui-switch.mui-active {
 	border-color: #33414F;
-    background-color: #33414F;
+	background-color: #33414F;
 }
-.task .mui-switch .mui-switch-handle{
+
+.task .mui-switch .mui-switch-handle {
 	width: 20px;
 	height: 20px;
 	top: 0;
 	left: 1px;
 }
-.task .mui-switch.mui-active .mui-switch-handle{
+
+.task .mui-switch.mui-active .mui-switch-handle {
 	left: 0;
 }
-.task .mui-switch .mui-switch-handle:after{
+
+.task .mui-switch .mui-switch-handle:after {
 	content: '';
 	display: inline-block;
 	width: 8px;
@@ -183,9 +207,10 @@
 	position: absolute;
 	top: 8px;
 	left: 4px;
-	
+
 }
-.task .mui-switch.mui-active .mui-switch-handle:after{
+
+.task .mui-switch.mui-active .mui-switch-handle:after {
 	height: 8px;
 	border-color: #33414F;
 	border-radius: 50%;
@@ -193,73 +218,103 @@
 }
 
 
-.task{
+.task {
 	padding: 0 4px;
 }
 
 /*任务标题*/
-.task-title{
+.task-title {
 	margin: 15px 0;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
 }
-.task-title h1{
+
+.task-title h1 {
 	font-size: 24px;
 	font-weight: normal;
 	color: #333;
 }
-.task-title .mui-progressbar{
+
+.task-title .mui-progressbar {
 	width: 60%;
 	background: #E6E6E6;
 }
+
 .task-title .mui-badge,
-.task-title .mui-progressbar span{
+.task-title .mui-progressbar span {
 	background: #F8D053;
 }
 
 /*任务列表*/
-.task-list .mui-table-view{
+.task-list .mui-table-view {
 	background: #efeff4;
 }
-.task-list .mui-table-view-cell{
+
+.task-list .mui-table-view-cell {
 	border: 1px solid #E6E6E6;
 	border-radius: 4px;
 	margin-bottom: 10px;
 }
+
 .task-list .mui-table-view:before,
 .task-list .mui-table-view:after,
-.task-list .mui-table-view-cell:after{
+.task-list .mui-table-view-cell:after {
 	background-color: transparent;
 }
-.task-list .mui-navigate-right .mui-badge{
+
+.task-list .mui-navigate-right .mui-badge {
 	font-size: 16px;
 	padding: 4px 10px;
 	right: 0;
 	top: 12px;
 }
-.task-list .task-tag{
+
+.task-list .task-tag {
 	margin-top: 20px;
 }
-.task-list .task-executive{
-	display: inline-block;
-	width: 80px;
+
+.task-list .navigate-title {
+	display: flex;
+	width: 70%;
 }
-.task-list .mui-badge{
+
+.mui-table-view-cell.mui-active .navigate-title {
+	width: 80%;
+}
+
+.task-list .task-name {
+	max-width: 85%;
+    margin-right: 10px;
+}
+
+.mui-table-view-cell.mui-active .task-name {
+	white-space: normal;
+}
+
+.task-list .task-executive {
+	display: inline-block;
+	width: 25%;
+}
+
+.task-list .mui-badge {
 	font-size: 14px;
 	padding: 4px 14px;
 	margin-bottom: 4px;
 }
-.task-list .task-tag{
+
+.task-list .task-tag {
 	display: flex;
 	align-items: flex-end;
 	justify-content: space-between;
 }
-.star-item{
+
+.star-item {
 	width: 100px;
 	text-align: right;
 }
-.task-list .finish-item{
+
+.task-list .finish-item {
 	position: absolute;
 	left: 30px;
 	bottom: 11px;
@@ -267,20 +322,22 @@
 
 /*控制显示*/
 .task-list .mui-navigate-right .mui-badge,
-.task-list .mui-collapse-content .mui-switch{
+.task-list .mui-collapse-content .mui-switch {
 	display: none;
 }
+
 .task-list .mui-table-view-cell.mui-active .mui-navigate-right .star-item,
 .task-list .mui-table-view-cell.mui-active .mui-navigate-right .task-executive,
-.task-list .mui-table-view-cell.mui-active .mui-navigate-right .mui-switch{
+.task-list .mui-table-view-cell.mui-active .mui-navigate-right .mui-switch {
 	display: none;
 }
+
 .task-list .mui-table-view-cell.mui-active .mui-navigate-right .mui-badge,
-.task-list .mui-table-view-cell.mui-active .mui-collapse-content .mui-switch{
+.task-list .mui-table-view-cell.mui-active .mui-collapse-content .mui-switch {
 	display: block;
 }
 
 /*新增按钮*/
-.task .mui-btn-sg{
+.task .mui-btn-sg {
 	padding: 3px 0;
 }

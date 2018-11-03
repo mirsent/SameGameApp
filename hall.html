@@ -53,8 +53,6 @@
 			}
 
 			.status-item .status-show {
-				display: inline-block;
-				width: 120px;
 				color: #CCC;
 				font-size: 28px;
 			}
@@ -63,28 +61,17 @@
 			.task .mui-table-view .mui-collapse-content {
 				padding-left: 45px;
 			}
-            .mui-table-view-cell.mui-collapse.mui-active .mui-collapse-content{
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-            .navigate-title{
-                display: flex;
-                width: 70%;
-            }
-            .mui-table-view-cell.mui-collapse.mui-active .navigate-title{
-                width: 80%;
-            }
-            .mui-table-view-cell.mui-collapse.mui-active p{
-                white-space: normal;
-            }
-            .task .task-executive{
-                width: 25%;
-            }
-            .task .task-tag{
-                align-items: center;
-                margin-top: 40px;
-            }
+
+			.mui-table-view-cell.mui-active .mui-collapse-content {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+			}
+
+			.task .task-tag {
+				align-items: center;
+				margin-top: 40px;
+			}
 
 			/*弹出框样式*/
 			.mui-popup-inner,
@@ -125,61 +112,14 @@
 				<!--任务列表-->
 				<div class="task-list">
 					<ul class="mui-table-view">
-
-						<li class="mui-table-view-cell mui-collapse">
-
-							<a class="mui-navigate-right" href="#">
-								<div class="mui-pull-left navigate-title">
-									<p class="mui-ellipsis" style="width: 90%;">任务名称放任务名称放得开任务名称放得开任务名称放得开得开任务名称放得开任务名称放得开</p>
-									<span class="task-expire">10/10</span>
-								</div>
-
-								<!-- <div class="star-item mui-pull-right">
-									<i data-index="1" class="mui-icon iconfont icon-star"></i>
-									<i data-index="2" class="mui-icon iconfont icon-star"></i>
-									<i data-index="3" class="mui-icon iconfont icon-star"></i>
-									<i data-index="4" class="mui-icon iconfont icon-star"></i>
-									<i data-index="5" class="mui-icon iconfont icon-star"></i>
-								</div>
-								<span class="mui-badge m-badge-square m-badge-warning">等待</span> -->
-
-								<span class="task-executive mui-ellipsis mui-pull-right">806281885@qq.com </span>
-								<!-- <span class="mui-badge m-badge-square m-badge-danger">完成</span> -->
-								<span class="mui-badge m-badge-square m-badge-info">进行</span>
-
-							</a>
-
-							<div class="mui-collapse-content">
-								<p>客户购房尽快改好发客户弗兰克和管理方式了客户购房尽量克服国家立法机关立法客户购房尽快改好发客户弗兰克和管理方式了客户购房尽量克服国家立法机关立法机关离开家离开机关离开家离开</p>
-								<div class="task-tag">
-									<div class="badge-item">
-										<span class="mui-badge m-badge-danger">tag</span>
-									</div>
-									<div class="star-item">
-										<i data-index="1" class="mui-icon iconfont icon-star"></i>
-										<i data-index="2" class="mui-icon iconfont icon-star"></i>
-										<i data-index="3" class="mui-icon iconfont icon-star"></i>
-										<i data-index="4" class="mui-icon iconfont icon-star"></i>
-										<i data-index="5" class="mui-icon iconfont icon-star"></i>
-									</div>
-								</div>
-
-								<div class="status-item">
-									<!-- <button type="button" class="mui-btn m-btn-warning status-action">领取</button> -->
-									<span class="status-show mui-ellipsis">806281885</span>
-								</div>
-							</div>
-
-						</li>
-
-
-
-
 						<li class="mui-table-view-cell mui-collapse" v-bind:class="{ 'mui-active': index == 0 }" v-for="(task, index) in tasks">
 
 							<a class="mui-navigate-right" href="#">
-								{{task.task_name}}
-								<span class="task-expire">{{task.deadline_date}}</span>
+                                <div class="mui-pull-left navigate-title">
+                                	<p class="task-name mui-ellipsis">{{task.task_name}}</p>
+                                	<span class="task-expire">{{task.deadline_date}}</span>
+                                </div>
+								
 								<template v-if="!task.executive">
 									<div class="star-item mui-pull-right">
 										<i data-index="1" class="mui-icon iconfont icon-star" v-bind:class="{ 'mui-active': task.difficult >= 1 }"></i>
@@ -287,7 +227,6 @@
 									type: type
 								}, function(data) {
 									plus.nativeUI.closeWaiting();
-									console.log('任务大厅:', JSON.stringify(data.data))
 									hall.tasks = data.data;
 								}, 'json');
 							}

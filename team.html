@@ -129,7 +129,6 @@
                 			mui.post(url+'Team/get_team_join_list',{
 	                                member_id: memberId
 	                            },function(data){
-	                            	console.log('团队:',JSON.stringify(data.data));
 	                            	team.teams = data.data;
 	                            },'json'
 	                        );
