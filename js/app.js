@@ -45,7 +45,7 @@ var url = 'http://samegame.ineinv.com/index.php/Home/';
 	    	"gmail.com",
 	    	"hotmail.com",
 		    
-"tart.now",
+"start.now",
 	    	"42du.cn"
 	    ];
 	    if(pattern.test(mail)) {
